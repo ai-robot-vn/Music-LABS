@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MusicLABS - Official Music Video Hub</title>
+    <title>MusicLABS - Official Music Video Hub & Custom HTML5 Player</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,6 +28,7 @@
                         'glow-primary': '0 10px 25px -5px rgba(79, 70, 229, 0.25)',
                         'light-card': '0 10px 30px -5px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.02)',
                         'subtle-hover': '0 20px 35px -10px rgba(15, 23, 42, 0.12)',
+                        'player-bar': '0 -10px 25px -5px rgba(15, 23, 42, 0.08)'
                     }
                 }
             }
@@ -64,17 +65,23 @@
 
         /* Light Glassmorphism Containers */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(226, 232, 240, 0.8);
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+
+        .glass-player {
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
         /* Custom Scrollbars */
@@ -119,6 +126,41 @@
         }
         .wave-bar:nth-child(2) { animation-delay: 0.2s; }
         .wave-bar:nth-child(3) { animation-delay: 0.4s; }
+
+        /* Custom Audio/Video Seek Range Input */
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            background: #6366f1;
+            cursor: pointer;
+            margin-top: -5px;
+            box-shadow: 0 0 8px rgba(99, 102, 241, 0.8);
+            transition: transform 0.15s ease;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 9999px;
+        }
+
+        /* Pointer pointer on player iframe overlay */
+        .iframe-shield {
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body class="selection:bg-indigo-500 selection:text-white flex flex-col min-h-screen">
@@ -142,7 +184,7 @@
                         <span class="font-extrabold tracking-tight text-slate-900 text-lg uppercase">Music<span class="text-indigo-600">LABS</span></span>
                         <i class="fa-solid fa-circle-check text-indigo-600 text-xs" title="Official Channel"></i>
                     </div>
-                    <p class="text-[11px] text-slate-500 font-medium hidden sm:block">Audio Visual Experience</p>
+                    <p class="text-[11px] text-slate-500 font-medium hidden sm:block">HTML5 Audio Visual Player</p>
                 </div>
             </div>
 
@@ -212,6 +254,10 @@
                                 <i class="fa-solid fa-video text-indigo-600 mr-1.5"></i>
                                 <strong id="statVideos" class="text-slate-900 font-bold">--</strong> Videos
                             </span>
+                            <span class="bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-lg text-indigo-700 font-semibold">
+                                <i class="fa-solid fa-sliders text-indigo-600 mr-1.5"></i>
+                                MusicLABS HTML5 Player Active
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -232,13 +278,111 @@
             </div>
         </section>
 
-        <!-- THEATER PLAYER & QUEUE SECTION -->
+        <!-- CUSTOM MUSICLABS HTML5 THEATER PLAYER & QUEUE SECTION -->
         <section id="playerSection" class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             
-            <!-- Embedded YouTube Theater Player -->
+            <!-- Embedded YouTube Stream with Custom MusicLABS HTML5 Controls -->
             <div class="lg:col-span-2 space-y-3">
-                <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-xl aspect-video border border-slate-200">
-                    <div id="youtubePlayer" class="w-full h-full"></div>
+                
+                <div id="customPlayerWrapper" class="relative bg-slate-950 rounded-2xl overflow-hidden shadow-2xl border border-slate-800 group select-none">
+                    
+                    <!-- Video Canvas Container -->
+                    <div class="relative aspect-video w-full h-full bg-black">
+                        <!-- YouTube Iframe API mount div -->
+                        <div id="youtubePlayer" class="w-full h-full pointer-events-none"></div>
+
+                        <!-- Invisible Click-Shield overlay to catch clicks on video area for play/pause toggle -->
+                        <div id="videoClickShield" onclick="togglePlayPause()" class="absolute inset-0 z-10 cursor-pointer flex items-center justify-center">
+                            
+                            <!-- Big Pause/Play overlay animation -->
+                            <div id="playCenterOverlay" class="w-16 h-16 rounded-full bg-indigo-600/90 text-white flex items-center justify-center shadow-2xl opacity-0 transition-all duration-300 transform scale-75 group-hover:opacity-100 group-hover:scale-100 backdrop-blur-md">
+                                <i id="centerPlayIcon" class="fa-solid fa-play text-2xl ml-1"></i>
+                            </div>
+                        </div>
+
+                        <!-- Video Top Bar Info Badge -->
+                        <div class="absolute top-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span class="bg-slate-900/80 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold px-3 py-1 rounded-lg flex items-center gap-2 shadow-lg">
+                                <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                                MusicLABS Custom Player
+                            </span>
+                            <span id="playerQualityBadge" class="bg-slate-900/80 backdrop-blur-md border border-white/20 text-slate-300 text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                                HD 1080p
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- MUSICLABS CUSTOM HTML5 CONTROL BAR -->
+                    <div class="glass-player p-3 sm:p-4 border-t border-white/10 text-white flex flex-col gap-2.5 z-20 relative">
+                        
+                        <!-- Track Seek Progress Bar Slider -->
+                        <div class="relative flex items-center gap-3">
+                            <span id="currentTimeText" class="text-[11px] font-mono text-slate-300 font-medium w-10 text-right">00:00</span>
+                            
+                            <div class="relative flex-1 flex items-center">
+                                <input type="range" id="seekSlider" min="0" max="100" value="0" step="0.1"
+                                       class="w-full h-1.5 bg-slate-700/80 rounded-lg appearance-none cursor-pointer focus:outline-none">
+                            </div>
+                            
+                            <span id="durationTimeText" class="text-[11px] font-mono text-slate-400 font-medium w-10">00:00</span>
+                        </div>
+
+                        <!-- Player Bottom Action Controls -->
+                        <div class="flex items-center justify-between gap-2 pt-1">
+                            
+                            <!-- Left Controls: Play, Prev, Next, Volume -->
+                            <div class="flex items-center gap-3">
+                                <button onclick="playPrevTrack()" title="Previous Track" class="text-slate-300 hover:text-white transition-colors text-sm p-1">
+                                    <i class="fa-solid fa-backward-step"></i>
+                                </button>
+
+                                <button id="customPlayBtn" onclick="togglePlayPause()" title="Play/Pause" 
+                                        class="w-9 h-9 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-105 active:scale-95">
+                                    <i id="playBtnIcon" class="fa-solid fa-play text-xs ml-0.5"></i>
+                                </button>
+
+                                <button onclick="playNextTrack()" title="Next Track" class="text-slate-300 hover:text-white transition-colors text-sm p-1">
+                                    <i class="fa-solid fa-forward-step"></i>
+                                </button>
+
+                                <!-- Volume Slider Control -->
+                                <div class="flex items-center gap-1.5 ml-2 group/vol">
+                                    <button id="muteBtn" onclick="toggleMute()" title="Mute/Unmute" class="text-slate-300 hover:text-indigo-400 transition-colors text-sm p-1">
+                                        <i id="volumeIcon" class="fa-solid fa-volume-high"></i>
+                                    </button>
+                                    <input type="range" id="volumeSlider" min="0" max="100" value="100" 
+                                           class="w-16 sm:w-20 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                                </div>
+                            </div>
+
+                            <!-- Center Track Title & Sound Wave Visualizer -->
+                            <div class="hidden md:flex items-center gap-2 max-w-xs truncate px-2">
+                                <div class="flex items-end justify-center gap-0.5 h-3 shrink-0">
+                                    <span class="w-0.5 bg-indigo-400 wave-bar"></span>
+                                    <span class="w-0.5 bg-indigo-400 wave-bar"></span>
+                                    <span class="w-0.5 bg-indigo-400 wave-bar"></span>
+                                </div>
+                                <span id="miniTrackTitle" class="text-xs font-semibold text-slate-200 truncate">Loading track...</span>
+                            </div>
+
+                            <!-- Right Controls: Speed, Theater, Fullscreen -->
+                            <div class="flex items-center gap-2.5">
+                                <!-- Speed Selector Dropdown -->
+                                <select id="speedSelector" onchange="changeSpeed(this.value)" 
+                                        class="bg-slate-800/90 hover:bg-slate-700 text-slate-200 text-[11px] font-semibold rounded-lg px-2 py-1 border border-white/10 outline-none cursor-pointer">
+                                    <option value="0.5">0.5x</option>
+                                    <option value="1.0" selected>1.0x</option>
+                                    <option value="1.25">1.25x</option>
+                                    <option value="1.5">1.5x</option>
+                                    <option value="2.0">2.0x</option>
+                                </select>
+
+                                <button onclick="toggleFullscreen()" title="Fullscreen Mode" class="text-slate-300 hover:text-white transition-colors text-sm p-1.5">
+                                    <i id="fullscreenIcon" class="fa-solid fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Video Details Box -->
@@ -264,14 +408,14 @@
                         <span id="currentTrackViews"><i class="fa-solid fa-eye text-indigo-600 mr-1.5"></i>-- views</span>
                         <span id="currentTrackDate"><i class="fa-solid fa-calendar-days text-indigo-600 mr-1.5"></i>--</span>
                         <span class="text-emerald-600 font-semibold flex items-center gap-1">
-                            <i class="fa-solid fa-shield-check"></i> Official MusicLABS Release
+                            <i class="fa-solid fa-shield-check"></i> Official MusicLABS HTML5 Release
                         </span>
                     </div>
                 </div>
             </div>
 
             <!-- Auto-Playlist Queue Sidebar -->
-            <div class="glass-card p-5 rounded-2xl border border-slate-200 shadow-light-card space-y-3 max-h-[560px] flex flex-col">
+            <div class="glass-card p-5 rounded-2xl border border-slate-200 shadow-light-card space-y-3 max-h-[600px] flex flex-col">
                 <div class="flex items-center justify-between border-b border-slate-200 pb-3">
                     <div class="flex items-center gap-2">
                         <i class="fa-solid fa-list-ul text-indigo-600"></i>
@@ -348,7 +492,7 @@
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-2">
                 <span class="font-extrabold text-slate-900">MusicLABS Official Hub</span>
-                <span>• Premium Music Video Streaming</span>
+                <span>• Custom HTML5 Player Engine</span>
             </div>
             
             <p>Auto-updated via YouTube Data API v3</p>
@@ -362,7 +506,7 @@
     <!-- CORE JAVASCRIPT ENGINE -->
     <script>
         /* 
-         * MUSICLABS WEB APPLICATION ENGINE
+         * MUSICLABS WEB APPLICATION & CUSTOM HTML5 PLAYER ENGINE
          * Integrated with YouTube Data API v3
          * Bright Clean Light Theme with Full-Video Tile Overlay Layout
          */
@@ -381,13 +525,19 @@
         let activeTab = 'all';
         let searchQuery = '';
 
-        // YouTube Player Reference
+        // Player Control State
         let ytPlayer = null;
+        let isPlaying = false;
+        let isMuted = false;
+        let previousVolume = 100;
+        let playerTicker = null;
+        let isUserSeeking = false;
 
         document.addEventListener('DOMContentLoaded', () => {
             setupEventListeners();
             loadChannelData();
             updateFavBadge();
+            setupKeyboardShortcuts();
         });
 
         function setupEventListeners() {
@@ -448,6 +598,186 @@
             document.getElementById('loadMoreBtn').addEventListener('click', () => {
                 if (UPLOADS_PLAYLIST_ID && nextPageToken) {
                     fetchMoreVideos();
+                }
+            });
+
+            // Custom Player Seek Slider Inputs
+            const seekSlider = document.getElementById('seekSlider');
+            seekSlider.addEventListener('mousedown', () => { isUserSeeking = true; });
+            seekSlider.addEventListener('touchstart', () => { isUserSeeking = true; });
+            seekSlider.addEventListener('change', (e) => {
+                if (ytPlayer && typeof ytPlayer.seekTo === 'function') {
+                    const totalSec = ytPlayer.getDuration() || 0;
+                    const seekToSec = (e.target.value / 100) * totalSec;
+                    ytPlayer.seekTo(seekToSec, true);
+                }
+                isUserSeeking = false;
+            });
+
+            // Custom Volume Slider
+            const volumeSlider = document.getElementById('volumeSlider');
+            volumeSlider.addEventListener('input', (e) => {
+                const val = parseInt(e.target.value);
+                setPlayerVolume(val);
+            });
+        }
+
+        function onYouTubeIframeAPIReady() {
+            // YouTube API initialized
+        }
+
+        function initCustomPlayer(videoId) {
+            ytPlayer = new YT.Player('youtubePlayer', {
+                height: '100%',
+                width: '100%',
+                videoId: videoId,
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0, // Disable YouTube default native controls for custom MusicLABS UI
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'fs': 0,
+                    'iv_load_policy': 3,
+                    'disablekb': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.playVideo();
+            startPlayerTicker();
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                updatePlayStateUI(true);
+                startPlayerTicker();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+                isPlaying = false;
+                updatePlayStateUI(false);
+            } else if (event.data === YT.PlayerState.ENDED) {
+                isPlaying = false;
+                updatePlayStateUI(false);
+                playNextTrack();
+            }
+        }
+
+        function startPlayerTicker() {
+            if (playerTicker) clearInterval(playerTicker);
+            playerTicker = setInterval(() => {
+                if (!ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+
+                const currentTime = ytPlayer.getCurrentTime() || 0;
+                const duration = ytPlayer.getDuration() || 0;
+
+                if (!isUserSeeking && duration > 0) {
+                    const pct = (currentTime / duration) * 100;
+                    document.getElementById('seekSlider').value = pct;
+                    document.getElementById('currentTimeText').innerText = formatSecondsToTime(currentTime);
+                    document.getElementById('durationTimeText').innerText = formatSecondsToTime(duration);
+                }
+            }, 300);
+        }
+
+        function togglePlayPause() {
+            if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') return;
+            const state = ytPlayer.getPlayerState();
+            if (state === YT.PlayerState.PLAYING) {
+                ytPlayer.pauseVideo();
+            } else {
+                ytPlayer.playVideo();
+            }
+        }
+
+        function updatePlayStateUI(playing) {
+            const btnIcon = document.getElementById('playBtnIcon');
+            const centerIcon = document.getElementById('centerPlayIcon');
+            const overlay = document.getElementById('playCenterOverlay');
+
+            if (playing) {
+                btnIcon.className = 'fa-solid fa-pause text-xs';
+                centerIcon.className = 'fa-solid fa-pause text-2xl';
+                overlay.classList.remove('opacity-100', 'scale-100');
+            } else {
+                btnIcon.className = 'fa-solid fa-play text-xs ml-0.5';
+                centerIcon.className = 'fa-solid fa-play text-2xl ml-1';
+                overlay.classList.add('opacity-100', 'scale-100');
+            }
+        }
+
+        function setPlayerVolume(val) {
+            if (!ytPlayer || typeof ytPlayer.setVolume !== 'function') return;
+            ytPlayer.setVolume(val);
+            document.getElementById('volumeSlider').value = val;
+            
+            const volIcon = document.getElementById('volumeIcon');
+            if (val === 0) {
+                volIcon.className = 'fa-solid fa-volume-xmark text-slate-400';
+                isMuted = true;
+            } else if (val < 50) {
+                volIcon.className = 'fa-solid fa-volume-low';
+                isMuted = false;
+            } else {
+                volIcon.className = 'fa-solid fa-volume-high';
+                isMuted = false;
+            }
+        }
+
+        function toggleMute() {
+            if (!ytPlayer) return;
+            if (isMuted) {
+                setPlayerVolume(previousVolume || 80);
+            } else {
+                previousVolume = document.getElementById('volumeSlider').value;
+                setPlayerVolume(0);
+            }
+        }
+
+        function changeSpeed(speed) {
+            if (ytPlayer && typeof ytPlayer.setPlaybackRate === 'function') {
+                ytPlayer.setPlaybackRate(parseFloat(speed));
+            }
+        }
+
+        function toggleFullscreen() {
+            const wrapper = document.getElementById('customPlayerWrapper');
+            if (!document.fullscreenElement) {
+                if (wrapper.requestFullscreen) wrapper.requestFullscreen();
+                document.getElementById('fullscreenIcon').className = 'fa-solid fa-compress';
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+                document.getElementById('fullscreenIcon').className = 'fa-solid fa-expand';
+            }
+        }
+
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+                
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    togglePlayPause();
+                } else if (e.code === 'ArrowRight') {
+                    if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+                        ytPlayer.seekTo(ytPlayer.getCurrentTime() + 5, true);
+                    }
+                } else if (e.code === 'ArrowLeft') {
+                    if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+                        ytPlayer.seekTo(ytPlayer.getCurrentTime() - 5, true);
+                    }
+                } else if (e.code === 'ArrowUp') {
+                    e.preventDefault();
+                    const currentVol = parseInt(document.getElementById('volumeSlider').value);
+                    setPlayerVolume(Math.min(100, currentVol + 10));
+                } else if (e.code === 'ArrowDown') {
+                    e.preventDefault();
+                    const currentVol = parseInt(document.getElementById('volumeSlider').value);
+                    setPlayerVolume(Math.max(0, currentVol - 10));
                 }
             });
         }
@@ -748,6 +1078,7 @@
             };
 
             document.getElementById('currentTrackTitle').innerText = currentVideo.title;
+            document.getElementById('miniTrackTitle').innerText = currentVideo.title;
             document.getElementById('currentTrackViews').innerHTML = `<i class="fa-solid fa-eye text-indigo-600 mr-1.5"></i> ${currentVideo.views} views`;
             document.getElementById('currentTrackDate').innerHTML = `<i class="fa-solid fa-calendar-days text-indigo-600 mr-1.5"></i> ${formatDate(currentVideo.publishedAt)}`;
             
@@ -756,31 +1087,12 @@
             if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
                 ytPlayer.loadVideoById(videoId);
             } else {
-                ytPlayer = new YT.Player('youtubePlayer', {
-                    height: '100%',
-                    width: '100%',
-                    videoId: videoId,
-                    playerVars: {
-                        'autoplay': 1,
-                        'modestbranding': 1,
-                        'rel': 0,
-                        'fs': 1
-                    },
-                    events: {
-                        'onStateChange': onPlayerStateChange
-                    }
-                });
+                initCustomPlayer(videoId);
             }
 
             renderVideosGrid();
             renderQueue();
             scrollToPlayer();
-        }
-
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-                playNextTrack();
-            }
         }
 
         function playFirstTrack() {
@@ -794,6 +1106,13 @@
             const currentIndex = videosList.findIndex(v => v.id === currentPlayingVideoId);
             const nextIndex = (currentIndex + 1) % videosList.length;
             playVideo(videosList[nextIndex].id);
+        }
+
+        function playPrevTrack() {
+            if (!currentPlayingVideoId || videosList.length === 0) return;
+            const currentIndex = videosList.findIndex(v => v.id === currentPlayingVideoId);
+            const prevIndex = (currentIndex - 1 + videosList.length) % videosList.length;
+            playVideo(videosList[prevIndex].id);
         }
 
         function toggleFavorite(videoId) {
@@ -884,6 +1203,13 @@
             const minutes = (match[2] || '0').padStart(2, '0');
             const seconds = (match[3] || '0').padStart(2, '0');
             return hours ? `${hours}:${minutes}:${seconds}` : `${minutes}:${seconds}`;
+        }
+
+        function formatSecondsToTime(sec) {
+            const totalSec = Math.floor(sec);
+            const m = Math.floor(totalSec / 60);
+            const s = totalSec % 60;
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
         }
 
         function formatNumber(num) {
