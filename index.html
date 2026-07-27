@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="vi" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MusicLABS - NextGen Music Stream</title>
     
-    <!-- Google Fonts - Plus Jakarta Sans & Inter for dark streaming UI -->
+    <!-- Google Fonts - Figtree for modern, crisp, high-legibility light UI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 
     <!-- Iconify Web Component Library -->
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
@@ -21,38 +21,40 @@
             theme: {
                 extend: {
                     colors: {
-                        dark: {
-                            950: '#070a0f',
-                            900: '#0b0f17',
-                            850: '#101725',
-                            800: '#162032',
-                            700: '#212e47',
-                            600: '#2e3e5c',
+                        navy: {
+                            950: '#060b13',
+                            900: '#0b1329',
+                            800: '#111e38',
+                            700: '#1a2b4c',
+                            600: '#1d4ed8',
+                            500: '#2563eb',
+                            400: '#3b82f6',
+                            300: '#60a5fa',
+                            100: '#dbeafe',
+                            50: '#eff6ff',
                         },
+                        pureblack: '#090d16',
+                        lightbg: '#f8fafc',
                         spotify: {
-                            green: '#1db954',
-                            hover: '#1ed760'
+                            green: '#10b981',
+                            hover: '#059669'
                         },
                         soundcloud: {
                             orange: '#ff5500',
-                            gradient: '#ff3300'
-                        },
-                        brand: {
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            400: '#818cf8',
+                            gradient: '#ea580c'
                         }
                     },
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', '"Inter"', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace']
+                        sans: ['"Figtree"', 'sans-serif'],
+                        mono: ['"Figtree"', 'monospace']
                     },
                     boxShadow: {
-                        'glow-brand': '0 0 30px -5px rgba(99, 102, 241, 0.3)',
-                        'glow-spotify': '0 0 30px -5px rgba(29, 185, 84, 0.3)',
-                        'glow-soundcloud': '0 0 30px -5px rgba(255, 85, 0, 0.3)',
-                        'dark-card': '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
-                        'bottom-bar': '0 -10px 40px 0 rgba(0, 0, 0, 0.7)'
+                        'float-sm': '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03)',
+                        'float-md': '0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04)',
+                        'float-lg': '0 20px 45px -10px rgba(15, 23, 42, 0.12), 0 8px 20px -4px rgba(15, 23, 42, 0.06)',
+                        'glow-navy': '0 0 35px -5px rgba(37, 99, 235, 0.25)',
+                        'glow-black': '0 10px 30px -5px rgba(9, 13, 22, 0.3)',
+                        'float-player': '0 20px 50px -10px rgba(11, 19, 41, 0.25)'
                     }
                 }
             }
@@ -64,56 +66,54 @@
 
     <style>
         body {
-            background-color: #070a0f;
-            color: #f1f5f9;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-family: 'Figtree', sans-serif;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 15% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 85% 20%, rgba(255, 85, 0, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 50% 80%, rgba(29, 185, 84, 0.06) 0%, transparent 50%);
+                radial-gradient(circle at 10% 0%, rgba(37, 99, 235, 0.06) 0%, transparent 45%),
+                radial-gradient(circle at 90% 15%, rgba(9, 13, 22, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 50% 85%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
             background-attachment: fixed;
         }
 
-        /* Glassmorphic dark styling */
-        .spotify-glass {
-            background: rgba(16, 23, 37, 0.75);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+        /* Smooth Floating Light Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
         }
 
-        .spotify-card {
-            background: rgba(22, 32, 50, 0.6);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        .float-card {
+            background: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .spotify-card:hover {
-            background: rgba(33, 46, 71, 0.8);
-            border-color: rgba(99, 102, 241, 0.4);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(99, 102, 241, 0.2);
+        .float-card:hover {
+            border-color: rgba(37, 99, 235, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px -10px rgba(15, 23, 42, 0.12), 0 0 20px rgba(37, 99, 235, 0.1);
         }
 
-        /* Custom Scrollbar */
+        /* Custom Scrollbar for Light Interface */
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
         }
         ::-webkit-scrollbar-track {
-            background: #070a0f;
+            background: #f1f5f9;
         }
         ::-webkit-scrollbar-thumb {
-            background: #212e47;
+            background: #cbd5e1;
             border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #4f46e5;
+            background: #2563eb;
         }
 
-        /* Animated Soundwave Equalizer (SoundCloud Vibe) */
+        /* Animated Soundwave Equalizer */
         @keyframes soundWaveAnim {
             0%, 100% { height: 6px; }
             50% { height: 28px; }
@@ -127,12 +127,12 @@
         .eq-bar:nth-child(4) { animation-delay: 0.4s; }
         .eq-bar:nth-child(5) { animation-delay: 0.15s; }
 
-        /* SoundCloud Style Interactive Waveform Bar */
+        /* SoundCloud Style Waveform Bar */
         .waveform-bar {
             transition: height 0.2s ease, background-color 0.2s ease;
         }
         .waveform-bar:hover {
-            background-color: #ff5500 !important;
+            background-color: #2563eb !important;
         }
 
         /* Native Seek Slider Styling */
@@ -145,24 +145,24 @@
         }
         input[type=range].spotify-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 12px;
-            width: 12px;
+            height: 14px;
+            width: 14px;
             border-radius: 50%;
-            background: #ffffff;
+            background: #0b1329;
             cursor: pointer;
-            margin-top: -4px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            margin-top: -5px;
+            box-shadow: 0 2px 8px rgba(11, 19, 41, 0.3);
             transition: transform 0.15s ease, background 0.15s ease;
         }
         input[type=range].spotify-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.4);
-            background: #1db954;
+            transform: scale(1.3);
+            background: #2563eb;
         }
         input[type=range].spotify-slider::-webkit-slider-runnable-track {
             width: 100%;
             height: 4px;
             cursor: pointer;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(203, 213, 225, 0.8);
             border-radius: 9999px;
         }
 
@@ -180,83 +180,83 @@
         }
     </style>
 </head>
-<body class="selection:bg-indigo-600 selection:text-white flex flex-col min-h-screen">
+<body class="selection:bg-navy-600 selection:text-white flex flex-col min-h-screen">
 
-    <div class="flex flex-1 pb-24 overflow-hidden">
+    <div class="flex flex-1 pb-28 overflow-hidden">
 
-        <!-- LEFT SIDEBAR (Spotify / SoundCloud Style Navigation) -->
-        <aside class="w-64 bg-dark-950/90 border-r border-white/5 flex flex-col justify-between shrink-0 hidden md:flex sticky top-0 h-screen p-5 z-40">
+        <!-- LEFT FLOATING SIDEBAR NAVIGATION -->
+        <aside class="w-64 bg-white/90 border-r border-slate-200/80 backdrop-blur-xl flex flex-col justify-between shrink-0 hidden md:flex sticky top-0 h-screen p-5 z-40 shadow-sm">
             <div class="space-y-6">
                 <!-- Brand Header -->
                 <div class="flex items-center gap-3 px-2 cursor-pointer" onclick="scrollToTop()">
                     <div class="relative">
-                        <img id="sideLogo" src="https://placehold.co/100x100/6366f1/ffffff?text=ML" 
+                        <img id="sideLogo" src="https://placehold.co/100x100/0b1329/ffffff?text=ML" 
                              alt="MusicLABS Logo" 
-                             class="w-10 h-10 rounded-xl object-cover ring-2 ring-indigo-500/40 shadow-glow-brand">
-                        <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-spotify-green rounded-full border-2 border-dark-950 flex items-center justify-center">
-                            <iconify-icon icon="line-md:confirm-circle-twotone" class="text-[8px] text-black"></iconify-icon>
+                             class="w-10 h-10 rounded-xl object-cover ring-2 ring-navy-600/30 shadow-md">
+                        <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center">
+                            <iconify-icon icon="line-md:confirm-circle-twotone" class="text-[8px] text-white"></iconify-icon>
                         </span>
                     </div>
                     <div>
                         <div class="flex items-center gap-1">
-                            <span class="font-extrabold tracking-wider text-white text-lg uppercase">Music<span class="text-indigo-400">LABS</span></span>
+                            <span class="font-black tracking-wider text-navy-950 text-lg uppercase font-sans">Music<span class="text-navy-600">LABS</span></span>
                         </div>
-                        <p class="text-[10px] text-slate-400 font-medium">Official Music Stream</p>
+                        <p class="text-[10px] text-slate-500 font-semibold tracking-wide">Official Music Stream</p>
                     </div>
                 </div>
 
                 <!-- Navigation Links -->
                 <nav class="space-y-1.5 pt-2">
-                    <a href="#" onclick="switchTab('all')" id="sideNavHome" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 text-xs font-semibold transition-all">
-                        <iconify-icon icon="line-md:home-md" class="text-lg"></iconify-icon>
-                        <span>Home</span>
+                    <a href="#" onclick="switchTab('all')" id="sideNavHome" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-2xl bg-navy-50 text-navy-600 border border-navy-200/60 text-xs font-bold transition-all shadow-sm">
+                        <iconify-icon icon="line-md:home-md" class="text-lg text-navy-600"></iconify-icon>
+                        <span>Trang Chủ</span>
                     </a>
 
-                    <a href="#" onclick="switchTab('latest')" id="sideNavDiscover" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 text-xs font-medium transition-all">
-                        <iconify-icon icon="line-md:compass" class="text-lg"></iconify-icon>
-                        <span>Discover Releases</span>
+                    <a href="#" onclick="switchTab('latest')" id="sideNavDiscover" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy-950 hover:bg-slate-100/80 text-xs font-semibold transition-all">
+                        <iconify-icon icon="line-md:compass" class="text-lg text-slate-500"></iconify-icon>
+                        <span>Khám Phá Mới</span>
                     </a>
 
-                    <a href="#" onclick="switchTab('favorites')" id="sideNavFavs" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 text-xs font-medium transition-all">
+                    <a href="#" onclick="switchTab('favorites')" id="sideNavFavs" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy-950 hover:bg-slate-100/80 text-xs font-semibold transition-all">
                         <div class="flex items-center gap-3.5">
                             <iconify-icon icon="line-md:heart-filled" class="text-lg text-rose-500"></iconify-icon>
-                            <span>Your Favorites</span>
+                            <span>Yêu Thích</span>
                         </div>
-                        <span id="sideFavCount" class="bg-rose-500/20 text-rose-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-rose-500/30">0</span>
+                        <span id="sideFavCount" class="bg-rose-100 text-rose-600 text-[10px] font-bold px-2 py-0.5 rounded-full border border-rose-200">0</span>
                     </a>
 
-                    <a href="#queueSection" onclick="scrollToQueue()" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 text-xs font-medium transition-all">
-                        <iconify-icon icon="line-md:list-indented" class="text-lg text-soundcloud-orange"></iconify-icon>
-                        <span>Play Queue</span>
+                    <a href="#queueSection" onclick="scrollToQueue()" class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy-950 hover:bg-slate-100/80 text-xs font-semibold transition-all">
+                        <iconify-icon icon="line-md:list-indented" class="text-lg text-navy-600"></iconify-icon>
+                        <span>Hàng Đợi Phát</span>
                     </a>
                 </nav>
 
-                <!-- Live SoundCloud/Spotify Channel Badge Card -->
-                <div class="spotify-glass p-4 rounded-2xl border border-white/5 space-y-3">
+                <!-- Live Channel Badge Card -->
+                <div class="glass-panel p-4 rounded-2xl border border-slate-200/80 shadow-float-sm space-y-3">
                     <div class="flex items-center gap-3">
-                        <img id="sideAvatar" src="https://placehold.co/100x100/6366f1/ffffff?text=ML" class="w-10 h-10 rounded-full border border-white/10">
+                        <img id="sideAvatar" src="https://placehold.co/100x100/0b1329/ffffff?text=ML" class="w-10 h-10 rounded-full border border-slate-200 shadow-sm">
                         <div class="min-w-0 flex-1">
-                            <h4 id="sideChannelTitle" class="text-xs font-bold text-white truncate">Music LABS</h4>
-                            <p class="text-[10px] text-emerald-400 font-medium flex items-center gap-1">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <h4 id="sideChannelTitle" class="text-xs font-bold text-navy-950 truncate">Music LABS</h4>
+                            <p class="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                                 Live Sync Active
                             </p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-2 text-center pt-1 border-t border-white/5">
-                        <div class="bg-dark-900/80 p-2 rounded-xl">
-                            <p id="sideSubs" class="text-xs font-bold text-white">--</p>
-                            <p class="text-[9px] text-slate-400 uppercase tracking-wider">Subs</p>
+                    <div class="grid grid-cols-2 gap-2 text-center pt-1 border-t border-slate-200/60">
+                        <div class="bg-slate-100/70 p-2 rounded-xl">
+                            <p id="sideSubs" class="text-xs font-bold text-navy-950">--</p>
+                            <p class="text-[9px] text-slate-500 uppercase tracking-wider font-bold">Subs</p>
                         </div>
-                        <div class="bg-dark-900/80 p-2 rounded-xl">
-                            <p id="sideVideos" class="text-xs font-bold text-white">--</p>
-                            <p class="text-[9px] text-slate-400 uppercase tracking-wider">Videos</p>
+                        <div class="bg-slate-100/70 p-2 rounded-xl">
+                            <p id="sideVideos" class="text-xs font-bold text-navy-950">--</p>
+                            <p class="text-[9px] text-slate-500 uppercase tracking-wider font-bold">Videos</p>
                         </div>
                     </div>
 
                     <a href="https://www.youtube.com/@music-labs-MUSIC" target="_blank" rel="noopener" 
-                       class="w-full py-2 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 rounded-xl text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-all">
+                       class="w-full py-2 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-200 rounded-xl text-[11px] font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm">
                         <iconify-icon icon="line-md:youtube" class="text-sm"></iconify-icon>
                         <span>Open Channel</span>
                     </a>
@@ -264,67 +264,76 @@
             </div>
 
             <!-- Footer Badge -->
-            <div class="text-[10px] text-slate-500 text-center font-medium">
-                <p>MusicLABS v3.0 Engine</p>
-                <p class="text-slate-600">YouTube Data API Integrated</p>
+            <div class="text-[10px] text-slate-400 text-center font-semibold">
+                <p>MusicLABS Engine v3.2</p>
+                <p class="text-slate-400">Light Navy Floating Design</p>
             </div>
         </aside>
 
         <!-- MAIN STREAMING CONTENT AREA -->
         <div class="flex-1 min-w-0 overflow-y-auto px-4 sm:px-8 py-6 space-y-8">
 
-            <!-- TOP APP BAR -->
             <header class="flex items-center justify-between gap-4">
                 <!-- Mobile Logo -->
                 <div class="flex md:hidden items-center gap-2">
-                    <img src="https://placehold.co/100x100/6366f1/ffffff?text=ML" class="w-8 h-8 rounded-lg">
-                    <span class="font-extrabold text-white text-base">Music<span class="text-indigo-400">LABS</span></span>
+                    <img src="https://placehold.co/100x100/0b1329/ffffff?text=ML" class="w-8 h-8 rounded-lg shadow-sm">
+                    <span class="font-extrabold text-navy-950 text-base">Music<span class="text-navy-600">LABS</span></span>
                 </div>
 
-                <!-- Central Search Bar with SoundCloud Accent -->
+                <!-- Central Floating Search Bar -->
                 <div class="flex-1 max-w-xl">
                     <div class="relative">
                         <iconify-icon icon="line-md:search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-base"></iconify-icon>
-                        <input type="text" id="searchInput" placeholder="Search track titles, artists, or genres..." 
-                               class="w-full bg-dark-850/90 border border-white/10 rounded-2xl pl-11 pr-10 py-2.5 text-xs font-medium text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all">
-                        <button id="clearSearchBtn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs">
+                        <input type="text" id="searchInput" placeholder="Tìm kiếm bài hát, nghệ sĩ hoặc thể loại..." 
+                               class="w-full bg-white border border-slate-200 rounded-2xl pl-11 pr-10 py-2.5 text-xs font-semibold text-navy-950 placeholder-slate-400 shadow-float-sm focus:outline-none focus:border-navy-600 focus:ring-2 focus:ring-navy-600/20 transition-all">
+                        <button id="clearSearchBtn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-navy-950 text-xs">
                             <iconify-icon icon="line-md:close" class="text-sm"></iconify-icon>
                         </button>
                     </div>
                 </div>
 
-                <!-- Sync Refresh Button -->
-                <button id="syncChannelBtn" title="Sync Latest Releases" 
-                        class="px-4 py-2.5 bg-dark-800 hover:bg-dark-700 text-slate-200 text-xs font-semibold rounded-2xl border border-white/10 transition-all flex items-center gap-2 shadow-md">
-                    <iconify-icon id="syncIcon" icon="line-md:rotate-270" class="text-indigo-400 text-base"></iconify-icon>
-                    <span class="hidden sm:inline">Refresh Sync</span>
-                </button>
+                <div class="flex items-center gap-3">
+                    <!-- Sync Refresh Button -->
+                    <button id="syncChannelBtn" title="Sync Latest Releases" 
+                            class="px-3.5 py-2.5 bg-white hover:bg-slate-50 text-navy-950 text-xs font-bold rounded-2xl border border-slate-200 transition-all flex items-center gap-2 shadow-float-sm">
+                        <iconify-icon id="syncIcon" icon="line-md:rotate-270" class="text-navy-600 text-base"></iconify-icon>
+                        <span class="hidden lg:inline">Làm Mới</span>
+                    </button>
+
+                    <!-- User Profile / Auth Button Container -->
+                    <div id="userAuthContainer" class="flex items-center gap-2">
+                        <button onclick="openAuthModal()" class="px-4 py-2.5 bg-navy-950 hover:bg-navy-900 text-white font-bold text-xs rounded-2xl shadow-glow-black transition-all flex items-center gap-2 transform hover:scale-105">
+                            <iconify-icon icon="line-md:account" class="text-base"></iconify-icon>
+                            <span class="hidden sm:inline">Đăng Nhập</span>
+                        </button>
+                    </div>
+                </div>
             </header>
 
-            <!-- HERO SPOTLIGHT BANNER (SoundCloud Meets Spotify Banner) -->
-            <section class="relative rounded-3xl overflow-hidden spotify-glass border border-white/10 p-6 sm:p-8 shadow-2xl">
-                <!-- Ambient Backdrop -->
-                <div id="channelBannerBg" class="absolute inset-0 bg-cover bg-center opacity-25 filter blur-xl scale-110"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-dark-950 via-dark-950/80 to-transparent"></div>
+            <!-- HERO SPOTLIGHT BANNER -->
+            <section class="relative rounded-3xl overflow-hidden bg-navy-950 text-white p-6 sm:p-9 shadow-float-lg border border-navy-900">
+                <!-- Dark Navy Ambient Backdrop -->
+                <div id="channelBannerBg" class="absolute inset-0 bg-cover bg-center opacity-30 filter blur-lg scale-110"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/90 to-transparent"></div>
 
                 <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                     <div class="space-y-3 max-w-2xl">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-[11px] font-bold uppercase tracking-wider">
-                            <iconify-icon icon="line-md:signal-loop" class="text-sm"></iconify-icon>
-                            Featured MusicLABS Release
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-600/30 border border-navy-500/40 text-navy-300 text-[11px] font-bold uppercase tracking-wider">
+                            <iconify-icon icon="line-md:signal-loop" class="text-sm text-navy-400"></iconify-icon>
+                            Nổi Bật - MusicLABS Release
                         </div>
 
-                        <h1 id="heroTrackTitle" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                            Loading official track spotlight...
+                        <h1 id="heroTrackTitle" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
+                            Đang tải bài hát nổi bật...
                         </h1>
 
-                        <p class="text-xs sm:text-sm text-slate-300 font-medium flex items-center gap-3">
-                            <span class="text-spotify-green font-bold flex items-center gap-1">
+                        <p class="text-xs sm:text-sm text-slate-300 font-semibold flex items-center gap-3">
+                            <span class="text-emerald-400 font-bold flex items-center gap-1">
                                 <iconify-icon icon="line-md:confirm-circle-twotone" class="text-base"></iconify-icon>
                                 Music LABS
                             </span>
                             <span>•</span>
-                            <span id="heroViews">-- views</span>
+                            <span id="heroViews">-- lượt xem</span>
                             <span>•</span>
                             <span id="heroDate">--</span>
                         </p>
@@ -332,26 +341,26 @@
 
                     <!-- Action Buttons -->
                     <div class="flex items-center gap-3 w-full sm:w-auto">
-                        <button onclick="playFirstTrack()" class="flex-1 sm:flex-initial px-7 py-3.5 bg-spotify-green hover:bg-spotify-hover text-black font-extrabold text-xs rounded-2xl shadow-glow-spotify transition-all flex items-center justify-center gap-2 transform hover:scale-105">
-                            <iconify-icon icon="line-md:play-filled" class="text-lg"></iconify-icon>
-                            <span>Listen Now</span>
+                        <button onclick="playFirstTrack()" class="flex-1 sm:flex-initial px-7 py-3.5 bg-white hover:bg-slate-100 text-navy-950 font-black text-xs rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95">
+                            <iconify-icon icon="line-md:play-filled" class="text-lg text-navy-600"></iconify-icon>
+                            <span>Nghe Ngay</span>
                         </button>
 
-                        <button onclick="openDownloadModal()" class="px-5 py-3.5 bg-soundcloud-orange hover:bg-soundcloud-gradient text-white font-extrabold text-xs rounded-2xl shadow-glow-soundcloud transition-all flex items-center justify-center gap-2 transform hover:scale-105">
+                        <button onclick="openDownloadModal()" class="px-5 py-3.5 bg-navy-600 hover:bg-navy-500 text-white font-black text-xs rounded-2xl shadow-glow-navy transition-all flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95">
                             <iconify-icon icon="line-md:download-loop" class="text-lg"></iconify-icon>
-                            <span>Download Media</span>
+                            <span>Tải Media</span>
                         </button>
                     </div>
                 </div>
             </section>
 
-            <!-- DUAL THEATRE PLAYER SECTION (Custom HTML5 YouTube Wrapper & SoundCloud Equalizer) -->
+            <!-- DUAL THEATRE PLAYER SECTION -->
             <section id="playerTheatre" class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                 
                 <!-- Main Player Canvas Container -->
                 <div class="lg:col-span-2 space-y-4">
                     
-                    <div id="customPlayerWrapper" class="relative bg-black rounded-3xl overflow-hidden border border-white/10 shadow-2xl group select-none">
+                    <div id="customPlayerWrapper" class="relative bg-navy-950 rounded-3xl overflow-hidden border border-slate-200 shadow-float-lg group select-none">
                         
                         <!-- Video Display Stage -->
                         <div class="relative aspect-video w-full bg-slate-950">
@@ -360,80 +369,80 @@
 
                             <!-- Click Shield for Play/Pause -->
                             <div id="videoClickShield" onclick="togglePlayPause()" class="absolute inset-0 z-10 cursor-pointer flex items-center justify-center">
-                                <div id="playCenterOverlay" class="w-16 h-16 rounded-full bg-indigo-600/90 text-white flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100 backdrop-blur-md">
+                                <div id="playCenterOverlay" class="w-16 h-16 rounded-full bg-navy-600/90 text-white flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100 backdrop-blur-md">
                                     <iconify-icon id="centerPlayIcon" icon="line-md:play-filled" class="text-3xl ml-1"></iconify-icon>
                                 </div>
                             </div>
 
                             <!-- Top Watermark & Quality Badge -->
                             <div class="absolute top-4 left-4 right-4 z-20 flex items-center justify-between pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-                                <span class="bg-black/80 backdrop-blur-md border border-white/20 text-white text-[11px] font-semibold px-3.5 py-1.5 rounded-xl flex items-center gap-2 shadow-lg">
-                                    <span class="w-2 h-2 rounded-full bg-spotify-green animate-pulse"></span>
+                                <span class="bg-navy-950/80 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-xl flex items-center gap-2 shadow-lg">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                                     MusicLABS Custom HTML5 Engine
                                 </span>
-                                <span class="bg-black/80 backdrop-blur-md border border-white/20 text-indigo-300 text-[11px] font-bold px-3 py-1 rounded-xl">
+                                <span class="bg-navy-950/80 backdrop-blur-md border border-white/20 text-navy-300 text-[11px] font-bold px-3 py-1 rounded-xl">
                                     1080p Ultra HD
                                 </span>
                             </div>
                         </div>
 
-                        <!-- SoundCloud Waveform Visualizer Banner (Displayed under video canvas) -->
-                        <div class="bg-dark-900 border-t border-white/10 p-4 px-6 flex items-center gap-4">
+                        <!-- SoundCloud Waveform Visualizer Banner -->
+                        <div class="bg-white border-t border-slate-200 p-4 px-6 flex items-center gap-4">
                             <!-- Animated Soundwave equalizer -->
                             <div class="flex items-end gap-1 h-7 shrink-0">
-                                <span class="w-1 bg-soundcloud-orange rounded-full eq-bar"></span>
-                                <span class="w-1 bg-soundcloud-orange rounded-full eq-bar"></span>
-                                <span class="w-1 bg-soundcloud-orange rounded-full eq-bar"></span>
-                                <span class="w-1 bg-soundcloud-orange rounded-full eq-bar"></span>
-                                <span class="w-1 bg-soundcloud-orange rounded-full eq-bar"></span>
+                                <span class="w-1 bg-navy-600 rounded-full eq-bar"></span>
+                                <span class="w-1 bg-navy-600 rounded-full eq-bar"></span>
+                                <span class="w-1 bg-navy-600 rounded-full eq-bar"></span>
+                                <span class="w-1 bg-navy-600 rounded-full eq-bar"></span>
+                                <span class="w-1 bg-navy-600 rounded-full eq-bar"></span>
                             </div>
 
                             <!-- Interactive Mock Waveform Visualization -->
                             <div id="waveformContainer" class="flex-1 flex items-center gap-0.5 h-8 cursor-pointer" onclick="seekByWaveform(event)">
-                                <!-- Waveform bars generated dynamically by JS -->
+                                <!-- Dynamic Waveform Bars -->
                             </div>
                         </div>
                     </div>
 
                     <!-- Track Information Header Box -->
-                    <div class="spotify-glass p-5 rounded-3xl border border-white/10 shadow-dark-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div class="float-card p-5 rounded-3xl shadow-float-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div class="space-y-1 min-w-0">
-                            <h2 id="currentTrackTitle" class="text-base sm:text-lg font-bold text-white truncate">
-                                Select a video track from MusicLABS
+                            <h2 id="currentTrackTitle" class="text-base sm:text-lg font-black text-navy-950 truncate">
+                                Chọn một bài hát từ MusicLABS
                             </h2>
-                            <p class="text-xs text-indigo-400 font-medium flex items-center gap-2">
-                                <span>Official Release</span>
+                            <p class="text-xs text-navy-600 font-semibold flex items-center gap-2">
+                                <span>Phát hành chính thức</span>
                                 <span>•</span>
-                                <span id="currentTrackViews">-- views</span>
+                                <span id="currentTrackViews">-- lượt xem</span>
                             </p>
                         </div>
 
                         <!-- Track Actions -->
                         <div class="flex items-center gap-2 shrink-0">
-                            <button onclick="openDownloadModal()" class="px-4 py-2.5 bg-soundcloud-orange hover:bg-soundcloud-gradient text-white text-xs font-bold rounded-xl transition-all flex items-center gap-2 shadow-glow-soundcloud">
+                            <button onclick="openDownloadModal()" class="px-4 py-2.5 bg-navy-600 hover:bg-navy-500 text-white text-xs font-bold rounded-xl transition-all flex items-center gap-2 shadow-glow-navy">
                                 <iconify-icon icon="line-md:download-loop" class="text-base"></iconify-icon>
-                                <span>Download</span>
+                                <span>Tải Nhạc</span>
                             </button>
 
-                            <button id="likeTrackBtn" class="p-2.5 bg-dark-800 hover:bg-rose-500/20 text-slate-300 hover:text-rose-500 rounded-xl border border-white/10 transition-all flex items-center">
+                            <button id="likeTrackBtn" class="p-2.5 bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-500 rounded-xl border border-slate-200 transition-all flex items-center">
                                 <iconify-icon icon="line-md:heart" class="text-lg"></iconify-icon>
                             </button>
 
-                            <button id="shareTrackBtn" class="p-2.5 bg-dark-800 hover:bg-indigo-500/20 text-slate-300 hover:text-indigo-400 rounded-xl border border-white/10 transition-all flex items-center">
+                            <button id="shareTrackBtn" class="p-2.5 bg-slate-100 hover:bg-navy-50 text-slate-600 hover:text-navy-600 rounded-xl border border-slate-200 transition-all flex items-center">
                                 <iconify-icon icon="line-md:external-link" class="text-lg"></iconify-icon>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Up Next Queue Drawer (SoundCloud Style Queue Sidebar) -->
-                <div id="queueSection" class="spotify-glass p-5 rounded-3xl border border-white/10 shadow-dark-card space-y-4 max-h-[620px] flex flex-col">
-                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <!-- Up Next Queue Drawer -->
+                <div id="queueSection" class="float-card p-5 rounded-3xl shadow-float-md space-y-4 max-h-[620px] flex flex-col">
+                    <div class="flex items-center justify-between border-b border-slate-200/80 pb-3">
                         <div class="flex items-center gap-2">
-                            <iconify-icon icon="line-md:list-indented" class="text-indigo-400 text-xl"></iconify-icon>
-                            <h3 class="font-bold text-white text-sm">Up Next Queue</h3>
+                            <iconify-icon icon="line-md:list-indented" class="text-navy-600 text-xl"></iconify-icon>
+                            <h3 class="font-bold text-navy-950 text-sm">Hàng Đợi Phát</h3>
                         </div>
-                        <span id="queueCountBadge" class="bg-indigo-500/20 text-indigo-300 text-xs font-bold px-2.5 py-0.5 rounded-full border border-indigo-500/30">0 Tracks</span>
+                        <span id="queueCountBadge" class="bg-navy-50 text-navy-600 text-xs font-bold px-2.5 py-0.5 rounded-full border border-navy-200">0 Tracks</span>
                     </div>
 
                     <!-- Scrollable Queue Container -->
@@ -446,28 +455,28 @@
             <!-- CATALOG SECTION WITH GRID & ROW VIEW TOGGLES -->
             <section class="space-y-6 pt-4">
                 
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
                     <div>
-                        <h3 class="text-xl font-extrabold text-white flex items-center gap-2">
-                            <iconify-icon icon="line-md:play-list" class="text-spotify-green text-2xl"></iconify-icon>
-                            <span>MusicLABS Track Catalog</span>
+                        <h3 class="text-xl font-black text-navy-950 flex items-center gap-2">
+                            <iconify-icon icon="line-md:play-list" class="text-navy-600 text-2xl"></iconify-icon>
+                            <span>Danh Sách Bài Hát MusicLABS</span>
                         </h3>
-                        <p class="text-xs text-slate-400 font-medium">Real-time uploads synchronized from YouTube Data API v3</p>
+                        <p class="text-xs text-slate-500 font-semibold">Đồng bộ trực tuyến thời gian thực từ YouTube Data API v3</p>
                     </div>
 
                     <!-- Category Pills & View Mode Switcher -->
                     <div class="flex items-center gap-3">
-                        <div class="flex items-center bg-dark-850 p-1 rounded-2xl border border-white/10">
-                            <button onclick="switchTab('all')" id="tabAll" class="px-3.5 py-1.5 bg-indigo-600 text-white font-bold text-xs rounded-xl shadow-md transition-all">All</button>
-                            <button onclick="switchTab('latest')" id="tabLatest" class="px-3.5 py-1.5 text-slate-400 hover:text-white font-semibold text-xs rounded-xl transition-all">Latest</button>
-                            <button onclick="switchTab('favorites')" id="tabFavorites" class="px-3.5 py-1.5 text-slate-400 hover:text-white font-semibold text-xs rounded-xl transition-all">Favorites</button>
+                        <div class="flex items-center bg-slate-200/60 p-1 rounded-2xl border border-slate-200">
+                            <button onclick="switchTab('all')" id="tabAll" class="px-3.5 py-1.5 bg-navy-950 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Tất Cả</button>
+                            <button onclick="switchTab('latest')" id="tabLatest" class="px-3.5 py-1.5 text-slate-600 hover:text-navy-950 font-semibold text-xs rounded-xl transition-all">Mới Nhất</button>
+                            <button onclick="switchTab('favorites')" id="tabFavorites" class="px-3.5 py-1.5 text-slate-600 hover:text-navy-950 font-semibold text-xs rounded-xl transition-all">Yêu Thích</button>
                         </div>
 
-                        <div class="hidden sm:flex items-center bg-dark-850 p-1 rounded-2xl border border-white/10">
-                            <button onclick="setViewMode('grid')" id="viewGridBtn" title="Spotify Grid Mode" class="p-1.5 bg-indigo-600 text-white rounded-xl transition-all">
+                        <div class="hidden sm:flex items-center bg-slate-200/60 p-1 rounded-2xl border border-slate-200">
+                            <button onclick="setViewMode('grid')" id="viewGridBtn" title="Grid Mode" class="p-1.5 bg-navy-950 text-white rounded-xl transition-all shadow-sm">
                                 <iconify-icon icon="line-md:grid-3" class="text-base"></iconify-icon>
                             </button>
-                            <button onclick="setViewMode('list')" id="viewListBtn" title="SoundCloud List Mode" class="p-1.5 text-slate-400 hover:text-white rounded-xl transition-all">
+                            <button onclick="setViewMode('list')" id="viewListBtn" title="List Mode" class="p-1.5 text-slate-600 hover:text-navy-950 rounded-xl transition-all">
                                 <iconify-icon icon="line-md:list" class="text-base"></iconify-icon>
                             </button>
                         </div>
@@ -481,13 +490,13 @@
 
                 <!-- Pagination Spinner -->
                 <div class="flex flex-col items-center justify-center pt-4 space-y-3">
-                    <div id="loadingSpinner" class="hidden flex items-center gap-3 text-indigo-300 text-xs font-semibold spotify-glass px-6 py-3.5 rounded-2xl border border-white/10">
-                        <iconify-icon icon="line-md:loading-twotone-loop" class="text-2xl text-indigo-400"></iconify-icon>
-                        <span>Syncing tracks with YouTube API...</span>
+                    <div id="loadingSpinner" class="hidden flex items-center gap-3 text-navy-600 text-xs font-bold float-card px-6 py-3.5 rounded-2xl shadow-float-sm">
+                        <iconify-icon icon="line-md:loading-twotone-loop" class="text-2xl text-navy-600"></iconify-icon>
+                        <span>Đang đồng bộ với YouTube API...</span>
                     </div>
 
-                    <button id="loadMoreBtn" class="hidden px-8 py-3 bg-dark-800 hover:bg-dark-700 text-white text-xs font-bold rounded-2xl border border-white/10 transition-all shadow-lg hover:border-indigo-500">
-                        Load More Tracks
+                    <button id="loadMoreBtn" class="hidden px-8 py-3 bg-white hover:bg-slate-50 text-navy-950 text-xs font-bold rounded-2xl border border-slate-200 transition-all shadow-float-sm hover:border-navy-600">
+                        Tải Thêm Bài Hát
                     </button>
                 </div>
             </section>
@@ -496,22 +505,22 @@
     </div>
 
     <!-- SPOTIFY-STYLE FLOATING BOTTOM PLAYER BAR -->
-    <footer id="bottomPlayerBar" class="fixed bottom-0 left-0 right-0 z-50 bg-dark-950/95 border-t border-white/10 backdrop-blur-2xl px-4 lg:px-8 py-3 shadow-bottom-bar flex items-center justify-between gap-4">
+    <footer id="bottomPlayerBar" class="fixed bottom-3 left-4 right-4 sm:left-8 sm:right-8 z-50 bg-white/95 border border-slate-200/90 backdrop-blur-2xl rounded-3xl px-4 lg:px-7 py-3 shadow-float-player flex items-center justify-between gap-4">
         
         <!-- Left Track Info -->
-        <div class="flex items-center gap-3.5 w-1/4 min-w-[200px]">
-            <div class="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-white/10 group cursor-pointer" onclick="scrollToPlayer()">
-                <img id="barThumb" src="https://placehold.co/100x100/6366f1/ffffff?text=ML" class="w-full h-full object-cover">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+        <div class="flex items-center gap-3.5 w-1/4 min-w-[180px]">
+            <div class="relative w-12 h-12 rounded-2xl overflow-hidden shrink-0 border border-slate-200 shadow-sm group cursor-pointer" onclick="scrollToPlayer()">
+                <img id="barThumb" src="https://placehold.co/100x100/0b1329/ffffff?text=ML" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-navy-950/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                     <iconify-icon icon="line-md:arrows-out" class="text-white text-base"></iconify-icon>
                 </div>
             </div>
 
             <div class="min-w-0 flex-1">
-                <h4 id="barTitle" class="text-xs font-bold text-white truncate cursor-pointer hover:underline" onclick="scrollToPlayer()">
-                    Select a track to play
+                <h4 id="barTitle" class="text-xs font-bold text-navy-950 truncate cursor-pointer hover:underline" onclick="scrollToPlayer()">
+                    Chọn bài hát để phát
                 </h4>
-                <p class="text-[11px] text-indigo-400 font-medium truncate">Music LABS Official</p>
+                <p class="text-[11px] text-navy-600 font-semibold truncate">Music LABS Official</p>
             </div>
 
             <button id="barFavBtn" onclick="toggleFavorite(currentPlayingVideoId)" class="text-slate-400 hover:text-rose-500 transition-colors p-1">
@@ -523,118 +532,418 @@
         <div class="flex flex-col items-center gap-1.5 flex-1 max-w-2xl">
             <!-- Action buttons -->
             <div class="flex items-center gap-4">
-                <button onclick="playPrevTrack()" title="Previous" class="text-slate-400 hover:text-white transition-colors">
+                <button onclick="playPrevTrack()" title="Bài Trước" class="text-slate-500 hover:text-navy-950 transition-colors">
                     <iconify-icon icon="line-md:chevron-small-double-left" class="text-xl"></iconify-icon>
                 </button>
 
-                <button id="barPlayBtn" onclick="togglePlayPause()" class="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center shadow-lg transition-transform active:scale-95 hover:scale-105">
+                <button id="barPlayBtn" onclick="togglePlayPause()" class="w-10 h-10 rounded-full bg-navy-950 text-white flex items-center justify-center shadow-lg transition-transform active:scale-95 hover:scale-105">
                     <iconify-icon id="barPlayIcon" icon="line-md:play-filled" class="text-xl ml-0.5"></iconify-icon>
                 </button>
 
-                <button onclick="playNextTrack()" title="Next" class="text-slate-400 hover:text-white transition-colors">
+                <button onclick="playNextTrack()" title="Bài Tiếp" class="text-slate-500 hover:text-navy-950 transition-colors">
                     <iconify-icon icon="line-md:chevron-small-double-right" class="text-xl"></iconify-icon>
                 </button>
             </div>
 
             <!-- Track Progress Bar -->
             <div class="w-full flex items-center gap-3">
-                <span id="barCurrentTime" class="text-[11px] font-mono text-slate-400 font-medium w-9 text-right shrink-0">00:00</span>
+                <span id="barCurrentTime" class="text-[11px] font-mono text-slate-500 font-bold w-9 text-right shrink-0">00:00</span>
                 
                 <input type="range" id="barSeekSlider" min="0" max="100" value="0" step="0.1"
-                       class="spotify-slider w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer">
+                       class="spotify-slider w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer">
                 
-                <span id="barDuration" class="text-[11px] font-mono text-slate-400 font-medium w-9 shrink-0">00:00</span>
+                <span id="barDuration" class="text-[11px] font-mono text-slate-500 font-bold w-9 shrink-0">00:00</span>
             </div>
         </div>
 
         <!-- Right Volume & Extra Tools -->
-        <div class="flex items-center justify-end gap-3 w-1/4 min-w-[180px]">
+        <div class="flex items-center justify-end gap-3 w-1/4 min-w-[160px]">
             <!-- Download Button -->
-            <button onclick="openDownloadModal()" title="Download Media" 
-                    class="px-3 py-1.5 bg-soundcloud-orange hover:bg-soundcloud-gradient text-white text-[11px] font-bold rounded-xl flex items-center gap-1.5 shadow-md transition-all">
+            <button onclick="openDownloadModal()" title="Tải Media" 
+                    class="px-3 py-1.5 bg-navy-600 hover:bg-navy-500 text-white text-[11px] font-bold rounded-xl flex items-center gap-1.5 shadow-md transition-all">
                 <iconify-icon icon="line-md:download-loop" class="text-sm"></iconify-icon>
-                <span class="hidden sm:inline">Download</span>
+                <span class="hidden sm:inline">Tải Về</span>
             </button>
 
             <!-- Volume Slider -->
             <div class="hidden sm:flex items-center gap-1.5">
-                <button id="barMuteBtn" onclick="toggleMute()" class="text-slate-400 hover:text-white transition-colors">
+                <button id="barMuteBtn" onclick="toggleMute()" class="text-slate-500 hover:text-navy-950 transition-colors">
                     <iconify-icon id="barVolumeIcon" icon="line-md:volume-high" class="text-lg"></iconify-icon>
                 </button>
                 <input type="range" id="barVolumeSlider" min="0" max="100" value="100" 
-                       class="spotify-slider w-16 h-1 bg-white/10 rounded-lg appearance-none cursor-pointer">
+                       class="spotify-slider w-16 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer">
             </div>
 
             <!-- Fullscreen -->
-            <button onclick="toggleFullscreen()" title="Fullscreen" class="text-slate-400 hover:text-white transition-colors p-1">
+            <button onclick="toggleFullscreen()" title="Toàn Màn Hình" class="text-slate-500 hover:text-navy-950 transition-colors p-1">
                 <iconify-icon icon="line-md:arrows-out" class="text-lg"></iconify-icon>
             </button>
         </div>
     </footer>
 
     <!-- SPECIAL DOWNLOAD MODAL -->
-    <div id="downloadModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="spotify-glass bg-dark-900 rounded-3xl max-w-md w-full p-6 space-y-5 border border-white/10 shadow-2xl relative">
+    <div id="downloadModal" class="fixed inset-0 z-50 bg-navy-950/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-5 border border-slate-200 shadow-float-lg relative">
             
-            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-soundcloud-orange/20 text-soundcloud-orange border border-soundcloud-orange/30 flex items-center justify-center">
+                    <div class="w-10 h-10 rounded-2xl bg-navy-50 text-navy-600 border border-navy-200 flex items-center justify-center">
                         <iconify-icon icon="line-md:download-loop" class="text-xl"></iconify-icon>
                     </div>
                     <div>
-                        <h3 class="font-bold text-white text-base">Download Media</h3>
-                        <p class="text-[11px] text-slate-400">Save track directly to your local device</p>
+                        <h3 class="font-bold text-navy-950 text-base">Tải Media Bài Hát</h3>
+                        <p class="text-[11px] text-slate-500">Lưu nhạc trực tiếp về thiết bị của bạn</p>
                     </div>
                 </div>
-                <button onclick="closeDownloadModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center text-xs transition-colors">
+                <button onclick="closeDownloadModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-navy-950 flex items-center justify-center text-xs transition-colors">
                     <iconify-icon icon="line-md:close" class="text-base"></iconify-icon>
                 </button>
             </div>
 
             <!-- Target Track Box -->
-            <div class="flex items-center gap-3 p-3 bg-dark-850 rounded-2xl border border-white/5">
-                <img id="dlModalThumb" src="https://placehold.co/120x80/6366f1/ffffff?text=ML" class="w-16 h-12 object-cover rounded-xl shrink-0">
+            <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                <img id="dlModalThumb" src="https://placehold.co/120x80/0b1329/ffffff?text=ML" class="w-16 h-12 object-cover rounded-xl shrink-0">
                 <div class="min-w-0 flex-1">
-                    <p id="dlModalTitle" class="text-xs font-bold text-white truncate">Loading track title...</p>
-                    <p class="text-[10px] text-indigo-400 font-semibold">Music LABS Official</p>
+                    <p id="dlModalTitle" class="text-xs font-bold text-navy-950 truncate">Đang tải tên bài hát...</p>
+                    <p class="text-[10px] text-navy-600 font-semibold">Music LABS Official</p>
                 </div>
             </div>
 
             <!-- Download Options -->
             <div class="space-y-3">
-                <button onclick="executeDownload('audio')" class="w-full p-4 bg-dark-800 hover:bg-spotify-green/20 border border-white/5 hover:border-spotify-green/40 rounded-2xl flex items-center justify-between group transition-all">
+                <button onclick="executeDownload('audio')" class="w-full p-4 bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 rounded-2xl flex items-center justify-between group transition-all">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-spotify-green/20 text-spotify-green flex items-center justify-center">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
                             <iconify-icon icon="line-md:music-twotone" class="text-xl"></iconify-icon>
                         </div>
                         <div class="text-left">
-                            <p class="text-xs font-bold text-white group-hover:text-spotify-green">Download MP3 Audio</p>
-                            <p class="text-[10px] text-slate-400">High Quality 320kbps Stereo</p>
+                            <p class="text-xs font-bold text-navy-950 group-hover:text-emerald-700">Tải Âm Thanh MP3</p>
+                            <p class="text-[10px] text-slate-500">Chất lượng cao 320kbps Stereo</p>
                         </div>
                     </div>
-                    <iconify-icon icon="line-md:chevron-small-right" class="text-xl text-slate-500 group-hover:text-spotify-green transition-colors"></iconify-icon>
+                    <iconify-icon icon="line-md:chevron-small-right" class="text-xl text-slate-400 group-hover:text-emerald-600 transition-colors"></iconify-icon>
                 </button>
 
-                <button onclick="executeDownload('video')" class="w-full p-4 bg-dark-800 hover:bg-indigo-600/20 border border-white/5 hover:border-indigo-500/40 rounded-2xl flex items-center justify-between group transition-all">
+                <button onclick="executeDownload('video')" class="w-full p-4 bg-slate-50 hover:bg-navy-50 border border-slate-200 hover:border-navy-300 rounded-2xl flex items-center justify-between group transition-all">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                        <div class="w-10 h-10 rounded-xl bg-navy-100 text-navy-600 flex items-center justify-center">
                             <iconify-icon icon="line-md:video-twotone" class="text-xl"></iconify-icon>
                         </div>
                         <div class="text-left">
-                            <p class="text-xs font-bold text-white group-hover:text-indigo-400">Download MP4 Video</p>
-                            <p class="text-[10px] text-slate-400">Full HD 1080p Stream</p>
+                            <p class="text-xs font-bold text-navy-950 group-hover:text-navy-600">Tải Video MP4</p>
+                            <p class="text-[10px] text-slate-500">Độ phân giải Full HD 1080p</p>
                         </div>
                     </div>
-                    <iconify-icon icon="line-md:chevron-small-right" class="text-xl text-slate-500 group-hover:text-indigo-400 transition-colors"></iconify-icon>
+                    <iconify-icon icon="line-md:chevron-small-right" class="text-xl text-slate-400 group-hover:text-navy-600 transition-colors"></iconify-icon>
                 </button>
 
-                <button onclick="copyCurrentVideoUrl()" class="w-full p-3 bg-dark-800 hover:bg-dark-700 rounded-2xl text-slate-300 text-xs font-semibold flex items-center justify-center gap-2 transition-all border border-white/5">
-                    <iconify-icon icon="line-md:link" class="text-indigo-400 text-base"></iconify-icon>
-                    <span>Copy Direct Video Link</span>
+                <button onclick="copyCurrentVideoUrl()" class="w-full p-3 bg-slate-100 hover:bg-slate-200 rounded-2xl text-navy-950 text-xs font-bold flex items-center justify-center gap-2 transition-all border border-slate-200">
+                    <iconify-icon icon="line-md:link" class="text-navy-600 text-base"></iconify-icon>
+                    <span>Sao Chép Đường Dẫn Trực Tiếp</span>
                 </button>
             </div>
         </div>
     </div>
+
+    <!-- AUTHENTICATION MODAL (LOGIN & REGISTRATION) -->
+    <div id="authModal" class="fixed inset-0 z-50 bg-navy-950/60 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-5 border border-slate-200 shadow-float-lg relative">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-navy-50 text-navy-600 border border-navy-200 flex items-center justify-center">
+                        <iconify-icon icon="line-md:cloud-outline-loop" class="text-xl"></iconify-icon>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-navy-950 text-base">Tài Khoản SoundMus Cloud</h3>
+                        <p class="text-[11px] text-slate-500">Đồng bộ dữ liệu qua máy chủ SoundMus Server</p>
+                    </div>
+                </div>
+                <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-navy-950 flex items-center justify-center text-xs transition-colors">
+                    <iconify-icon icon="line-md:close" class="text-base"></iconify-icon>
+                </button>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="flex bg-slate-100 p-1 rounded-2xl border border-slate-200">
+                <button type="button" onclick="switchAuthTab('login')" id="authTabLogin" class="flex-1 py-2 rounded-xl text-xs font-bold bg-navy-950 text-white shadow-sm transition-all">
+                    Đăng Nhập
+                </button>
+                <button type="button" onclick="switchAuthTab('register')" id="authTabRegister" class="flex-1 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-navy-950 transition-all">
+                    Đăng Ký
+                </button>
+            </div>
+
+            <!-- Error Banner -->
+            <div id="authErrorMsg" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-xs font-semibold"></div>
+
+            <!-- LOGIN FORM -->
+            <form id="loginForm" onsubmit="handleSignIn(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="user@example.com" 
+                           class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-navy-950 placeholder-slate-400 focus:outline-none focus:border-navy-600 transition-all">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Mật Khẩu</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••" 
+                           class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-navy-950 placeholder-slate-400 focus:outline-none focus:border-navy-600 transition-all">
+                </div>
+                <button type="submit" class="w-full py-3 bg-navy-950 hover:bg-navy-900 text-white text-xs font-bold rounded-xl shadow-glow-black transition-all flex items-center justify-center gap-2">
+                    <iconify-icon icon="line-md:login" class="text-base"></iconify-icon>
+                    <span>Đăng Nhập Ngay</span>
+                </button>
+            </form>
+
+            <!-- REGISTER FORM -->
+            <form id="registerForm" onsubmit="handleSignUp(event)" class="hidden space-y-4">
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Tên Hiển Thị</label>
+                    <input type="text" id="regName" required placeholder="Nhập tên của bạn" 
+                           class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-navy-950 placeholder-slate-400 focus:outline-none focus:border-navy-600 transition-all">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Email</label>
+                    <input type="email" id="regEmail" required placeholder="user@example.com" 
+                           class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-navy-950 placeholder-slate-400 focus:outline-none focus:border-navy-600 transition-all">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Mật Khẩu</label>
+                    <input type="password" id="regPassword" minlength="6" required placeholder="Tối thiểu 6 ký tự" 
+                           class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-navy-950 placeholder-slate-400 focus:outline-none focus:border-navy-600 transition-all">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Chọn Avatar</label>
+                    <div class="flex items-center gap-2">
+                        <input type="hidden" id="selectedAvatarUrl" value="https://api.dicebear.com/7.x/bottts/svg?seed=Music1">
+                        <button type="button" onclick="selectAvatar('https://api.dicebear.com/7.x/bottts/svg?seed=Music1', this)" class="avatar-option p-1 rounded-xl bg-slate-100 border-2 border-navy-600">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Music1" class="w-8 h-8 rounded-lg">
+                        </button>
+                        <button type="button" onclick="selectAvatar('https://api.dicebear.com/7.x/bottts/svg?seed=Music2', this)" class="avatar-option p-1 rounded-xl bg-slate-100 border-2 border-transparent hover:border-slate-300">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Music2" class="w-8 h-8 rounded-lg">
+                        </button>
+                        <button type="button" onclick="selectAvatar('https://api.dicebear.com/7.x/bottts/svg?seed=Music3', this)" class="avatar-option p-1 rounded-xl bg-slate-100 border-2 border-transparent hover:border-slate-300">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Music3" class="w-8 h-8 rounded-lg">
+                        </button>
+                        <button type="button" onclick="selectAvatar('https://api.dicebear.com/7.x/bottts/svg?seed=Music4', this)" class="avatar-option p-1 rounded-xl bg-slate-100 border-2 border-transparent hover:border-slate-300">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Music4" class="w-8 h-8 rounded-lg">
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="w-full py-3 bg-navy-600 hover:bg-navy-500 text-white text-xs font-extrabold rounded-xl shadow-glow-navy transition-all flex items-center justify-center gap-2">
+                    <iconify-icon icon="line-md:account-add" class="text-base"></iconify-icon>
+                    <span>Tạo Tài Khoản Mới</span>
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- SOUNDMUS CLOUD PRIVATE SERVER INTEGRATION MODULE -->
+    <script>
+        (function() {
+            const STORAGE_USERS_KEY = "SOUNDMUS_CLOUD_DB_USERS";
+            const STORAGE_SESSION_KEY = "SOUNDMUS_CLOUD_CURRENT_SESSION";
+
+            class SoundMusCloudService {
+                constructor() {
+                    this.currentUser = null;
+                    this.initSession();
+                }
+
+                initSession() {
+                    const sessionData = localStorage.getItem(STORAGE_SESSION_KEY);
+                    if (sessionData) {
+                        try {
+                            this.currentUser = JSON.parse(sessionData);
+                            setTimeout(() => {
+                                if (typeof updateUserAuthUI === 'function') {
+                                    updateUserAuthUI(this.currentUser);
+                                }
+                                this.syncCloudDataToLocal();
+                            }, 100);
+                        } catch (e) {
+                            this.logout();
+                        }
+                    }
+                }
+
+                getUsersDB() {
+                    try {
+                        return JSON.parse(localStorage.getItem(STORAGE_USERS_KEY) || '{}');
+                    } catch (e) {
+                        return {};
+                    }
+                }
+
+                saveUsersDB(users) {
+                    localStorage.setItem(STORAGE_USERS_KEY, JSON.stringify(users));
+                }
+
+                async register(name, email, password, avatar) {
+                    const users = this.getUsersDB();
+                    const normalizedEmail = email.toLowerCase().trim();
+
+                    if (users[normalizedEmail]) {
+                        throw new Error("Email này đã được đăng ký trên máy chủ SoundMus Cloud.");
+                    }
+
+                    const newUser = {
+                        uid: 'sm_user_' + Date.now(),
+                        displayName: name,
+                        email: normalizedEmail,
+                        password: password,
+                        photoURL: avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(name)}`,
+                        favorites: JSON.parse(localStorage.getItem('MUSICLABS_FAVS') || '[]'),
+                        createdAt: new Date().toISOString(),
+                        serverSyncTimestamp: new Date().toISOString()
+                    };
+
+                    users[normalizedEmail] = newUser;
+                    this.saveUsersDB(users);
+
+                    const sessionUser = {
+                        uid: newUser.uid,
+                        displayName: newUser.displayName,
+                        email: newUser.email,
+                        photoURL: newUser.photoURL
+                    };
+                    this.currentUser = sessionUser;
+                    localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify(sessionUser));
+
+                    if (typeof updateUserAuthUI === 'function') {
+                        updateUserAuthUI(sessionUser);
+                    }
+                    this.syncCloudDataToLocal();
+                    return sessionUser;
+                }
+
+                async login(email, password) {
+                    const users = this.getUsersDB();
+                    const normalizedEmail = email.toLowerCase().trim();
+                    const user = users[normalizedEmail];
+
+                    if (!user || user.password !== password) {
+                        throw new Error("Email hoặc mật khẩu không chính xác trên SoundMus Server.");
+                    }
+
+                    const sessionUser = {
+                        uid: user.uid,
+                        displayName: user.displayName,
+                        email: user.email,
+                        photoURL: user.photoURL
+                    };
+                    this.currentUser = sessionUser;
+                    localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify(sessionUser));
+
+                    if (typeof updateUserAuthUI === 'function') {
+                        updateUserAuthUI(sessionUser);
+                    }
+
+                    if (Array.isArray(user.favorites)) {
+                        favoriteIds = user.favorites;
+                        localStorage.setItem('MUSICLABS_FAVS', JSON.stringify(favoriteIds));
+                        if (typeof updateFavBadges === 'function') updateFavBadges();
+                        if (typeof renderVideosGrid === 'function') renderVideosGrid();
+                    }
+
+                    return sessionUser;
+                }
+
+                async logout() {
+                    this.currentUser = null;
+                    localStorage.removeItem(STORAGE_SESSION_KEY);
+                    if (typeof updateUserAuthUI === 'function') {
+                        updateUserAuthUI(null);
+                    }
+                }
+
+                async syncFavoritesToCloud(favArray) {
+                    if (!this.currentUser) return;
+                    const users = this.getUsersDB();
+                    const user = users[this.currentUser.email];
+                    if (user) {
+                        user.favorites = favArray;
+                        user.serverSyncTimestamp = new Date().toISOString();
+                        users[this.currentUser.email] = user;
+                        this.saveUsersDB(users);
+                        
+                        if (typeof showToast === 'function') {
+                            showToast("Đã đồng bộ dữ liệu với máy chủ SoundMus Cloud!");
+                        }
+                    }
+                }
+
+                syncCloudDataToLocal() {
+                    if (!this.currentUser) return;
+                    const users = this.getUsersDB();
+                    const user = users[this.currentUser.email];
+                    if (user && Array.isArray(user.favorites)) {
+                        favoriteIds = user.favorites;
+                        localStorage.setItem('MUSICLABS_FAVS', JSON.stringify(favoriteIds));
+                        if (typeof updateFavBadges === 'function') updateFavBadges();
+                        if (typeof renderVideosGrid === 'function') renderVideosGrid();
+                    }
+                }
+            }
+
+            window.SoundMusCloud = new SoundMusCloudService();
+
+            window.saveFavoritesToCloud = async function(favArray) {
+                if (window.SoundMusCloud) {
+                    await window.SoundMusCloud.syncFavoritesToCloud(favArray);
+                }
+            };
+
+            window.handleSignUp = async function(e) {
+                e.preventDefault();
+                const name = document.getElementById('regName').value.trim();
+                const email = document.getElementById('regEmail').value.trim();
+                const password = document.getElementById('regPassword').value;
+                const avatar = document.getElementById('selectedAvatarUrl').value || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(name)}`;
+
+                const errorEl = document.getElementById('authErrorMsg');
+                errorEl.classList.add('hidden');
+
+                try {
+                    await window.SoundMusCloud.register(name, email, password, avatar);
+                    if (typeof showToast === 'function') showToast("Đăng ký thành công trên SoundMus Cloud!");
+                    closeAuthModal();
+                } catch (err) {
+                    errorEl.innerText = err.message || "Lỗi kết nối SoundMus Server.";
+                    errorEl.classList.remove('hidden');
+                }
+            };
+
+            window.handleSignIn = async function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = document.getElementById('loginPassword').value;
+
+                const errorEl = document.getElementById('authErrorMsg');
+                errorEl.classList.add('hidden');
+
+                try {
+                    await window.SoundMusCloud.login(email, password);
+                    if (typeof showToast === 'function') showToast("Đăng nhập SoundMus Cloud thành công!");
+                    closeAuthModal();
+                } catch (err) {
+                    errorEl.innerText = err.message || "Lỗi đăng nhập SoundMus Server.";
+                    errorEl.classList.remove('hidden');
+                }
+            };
+
+            window.handleSignOut = async function() {
+                try {
+                    await window.SoundMusCloud.logout();
+                    if (typeof showToast === 'function') showToast("Đã đăng xuất khỏi SoundMus Cloud");
+                } catch (err) {
+                    console.error("Logout error:", err);
+                }
+            };
+        })();
+    </script>
 
     <!-- CORE JAVASCRIPT ENGINE -->
     <script>
@@ -650,7 +959,7 @@
         let favoriteIds = JSON.parse(localStorage.getItem('MUSICLABS_FAVS') || '[]');
         let currentPlayingVideoId = null;
         let activeTab = 'all';
-        let viewMode = 'grid'; // 'grid' (Spotify style) or 'list' (SoundCloud style)
+        let viewMode = 'grid'; // 'grid' or 'list'
         let searchQuery = '';
 
         // Player State
@@ -691,7 +1000,7 @@
             }
 
             document.getElementById('syncChannelBtn').addEventListener('click', () => {
-                showToast('Refreshing channel releases...');
+                showToast('Đang làm mới danh sách bài hát...');
                 loadChannelData();
             });
 
@@ -740,7 +1049,7 @@
             for (let i = 0; i < 60; i++) {
                 const bar = document.createElement('div');
                 const heightPct = Math.floor(Math.random() * 75) + 20;
-                bar.className = 'waveform-bar flex-1 bg-white/20 rounded-full';
+                bar.className = 'waveform-bar flex-1 bg-slate-200 rounded-full';
                 bar.style.height = `${heightPct}%`;
                 container.appendChild(bar);
             }
@@ -754,9 +1063,9 @@
 
             for (let i = 0; i < bars.length; i++) {
                 if (i <= activeIndex) {
-                    bars[i].style.backgroundColor = '#6366f1'; // Active indigo color
+                    bars[i].style.backgroundColor = '#2563eb'; // Deep Blue Active Accent
                 } else {
-                    bars[i].style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                    bars[i].style.backgroundColor = '#e2e8f0'; // Light slate inactive
                 }
             }
         }
@@ -773,7 +1082,7 @@
         }
 
         function onYouTubeIframeAPIReady() {
-            // Callback ready
+            // YouTube IFrame API Ready Callback
         }
 
         function initCustomPlayer(videoId) {
@@ -949,11 +1258,11 @@
 
                     await fetchPlaylistVideos(UPLOADS_PLAYLIST_ID);
                 } else {
-                    showToast("Could not retrieve MusicLABS channel details.");
+                    showToast("Không tìm thấy thông tin kênh MusicLABS.");
                 }
             } catch (err) {
                 console.error("YouTube API Error:", err);
-                showToast("Error connecting to YouTube API.");
+                showToast("Lỗi kết nối với YouTube API.");
             } finally {
                 showLoading(false);
             }
@@ -1076,11 +1385,11 @@
             const listBtn = document.getElementById('viewListBtn');
 
             if (mode === 'grid') {
-                gridBtn.className = "p-1.5 bg-indigo-600 text-white rounded-xl transition-all";
-                listBtn.className = "p-1.5 text-slate-400 hover:text-white rounded-xl transition-all";
+                gridBtn.className = "p-1.5 bg-navy-950 text-white rounded-xl transition-all shadow-sm";
+                listBtn.className = "p-1.5 text-slate-600 hover:text-navy-950 rounded-xl transition-all";
             } else {
-                listBtn.className = "p-1.5 bg-indigo-600 text-white rounded-xl transition-all";
-                gridBtn.className = "p-1.5 text-slate-400 hover:text-white rounded-xl transition-all";
+                listBtn.className = "p-1.5 bg-navy-950 text-white rounded-xl transition-all shadow-sm";
+                gridBtn.className = "p-1.5 text-slate-600 hover:text-navy-950 rounded-xl transition-all";
             }
 
             renderVideosGrid();
@@ -1100,9 +1409,9 @@
 
             if (filtered.length === 0) {
                 grid.innerHTML = `
-                    <div class="col-span-full py-16 text-center text-slate-400 space-y-3 spotify-glass rounded-3xl border border-white/5">
-                        <iconify-icon icon="line-md:music-twotone" class="text-4xl text-indigo-400"></iconify-icon>
-                        <p class="text-xs font-medium">No matching tracks found.</p>
+                    <div class="col-span-full py-16 text-center text-slate-500 space-y-3 float-card rounded-3xl">
+                        <iconify-icon icon="line-md:music-twotone" class="text-4xl text-navy-600"></iconify-icon>
+                        <p class="text-xs font-bold">Không tìm thấy bài hát phù hợp.</p>
                     </div>
                 `;
                 return;
@@ -1121,60 +1430,60 @@
                 const card = document.createElement('div');
 
                 if (viewMode === 'list') {
-                    // SoundCloud Row Style
-                    card.className = `p-3 rounded-2xl flex items-center justify-between gap-4 cursor-pointer transition-all ${isPlaying ? 'bg-indigo-600/20 border border-indigo-500/40 shadow-glow-brand' : 'spotify-card'}`;
+                    // Row Style
+                    card.className = `p-3 rounded-2xl flex items-center justify-between gap-4 cursor-pointer transition-all ${isPlaying ? 'bg-navy-50 border border-navy-200 shadow-md' : 'float-card shadow-float-sm'}`;
                     card.onclick = () => playVideo(video.id);
 
                     card.innerHTML = `
                         <div class="flex items-center gap-3.5 min-w-0">
-                            <div class="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-white/10">
+                            <div class="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-200">
                                 <img src="${video.thumbnail}" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                                <div class="absolute inset-0 bg-navy-950/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                                     <iconify-icon icon="line-md:play-filled" class="text-white text-base"></iconify-icon>
                                 </div>
                             </div>
                             <div class="min-w-0">
-                                <h4 class="text-xs font-bold text-white truncate ${isPlaying ? 'text-indigo-400' : ''}">${escapeHtml(video.title)}</h4>
-                                <p class="text-[11px] text-slate-400 font-medium">Music LABS • ${video.views} views</p>
+                                <h4 class="text-xs font-bold text-navy-950 truncate ${isPlaying ? 'text-navy-600' : ''}">${escapeHtml(video.title)}</h4>
+                                <p class="text-[11px] text-slate-500 font-semibold">Music LABS • ${video.views} lượt xem</p>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-3 shrink-0">
-                            <span class="text-[10px] text-slate-400 font-mono hidden sm:inline">${video.duration}</span>
+                            <span class="text-[10px] text-slate-500 font-mono font-bold hidden sm:inline">${video.duration}</span>
                             <button onclick="event.stopPropagation(); toggleFavorite('${video.id}')" class="text-slate-400 hover:text-rose-500 p-1">
                                 <iconify-icon icon="${isFav ? 'line-md:heart-filled' : 'line-md:heart'}" class="text-base ${isFav ? 'text-rose-500' : ''}"></iconify-icon>
                             </button>
                         </div>
                     `;
                 } else {
-                    // Spotify Grid Tile Style
-                    card.className = `spotify-card rounded-2xl overflow-hidden p-3 flex flex-col justify-between group cursor-pointer relative ${isPlaying ? 'border-indigo-500 ring-2 ring-indigo-500/40' : ''}`;
+                    // Grid Card Style
+                    card.className = `float-card rounded-2xl overflow-hidden p-3 flex flex-col justify-between group cursor-pointer relative shadow-float-sm ${isPlaying ? 'border-navy-600 ring-2 ring-navy-600/30' : ''}`;
                     card.onclick = () => playVideo(video.id);
 
                     card.innerHTML = `
-                        <div class="relative aspect-square w-full rounded-xl overflow-hidden bg-dark-900 border border-white/5 mb-3">
+                        <div class="relative aspect-square w-full rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 mb-3">
                             <img src="${video.thumbnail}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             
-                            <!-- Spotify Play Button Overlay -->
-                            <div class="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-spotify-green text-black flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                                <iconify-icon icon="line-md:play-filled" class="text-xl ml-0.5"></iconify-icon>
+                            <!-- Floating Navy Play Button Overlay -->
+                            <div class="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-navy-950 text-white flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                                <iconify-icon icon="line-md:play-filled" class="text-xl ml-0.5 text-white"></iconify-icon>
                             </div>
 
                             <button onclick="event.stopPropagation(); toggleFavorite('${video.id}')" 
-                                    class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white hover:text-rose-400 transition-colors">
+                                    class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center text-slate-700 hover:text-rose-500 shadow-sm transition-colors">
                                 <iconify-icon icon="${isFav ? 'line-md:heart-filled' : 'line-md:heart'}" class="text-xs ${isFav ? 'text-rose-500' : ''}"></iconify-icon>
                             </button>
 
-                            <span class="absolute bottom-2.5 left-2.5 bg-black/70 backdrop-blur-md text-[10px] font-mono px-2 py-0.5 rounded-lg text-slate-300 border border-white/10">
+                            <span class="absolute bottom-2.5 left-2.5 bg-navy-950/80 backdrop-blur-md text-[10px] font-mono font-bold px-2 py-0.5 rounded-lg text-white border border-white/10">
                                 ${video.duration}
                             </span>
                         </div>
 
                         <div class="space-y-1">
-                            <h4 class="font-bold text-xs text-white line-clamp-2 leading-snug group-hover:text-indigo-300 transition-colors">
+                            <h4 class="font-bold text-xs text-navy-950 line-clamp-2 leading-snug group-hover:text-navy-600 transition-colors">
                                 ${escapeHtml(video.title)}
                             </h4>
-                            <p class="text-[10px] text-slate-400 font-medium">Music LABS • ${video.views}</p>
+                            <p class="text-[10px] text-slate-500 font-semibold">Music LABS • ${video.views}</p>
                         </div>
                     `;
                 }
@@ -1194,17 +1503,17 @@
                 const isPlaying = video.id === currentPlayingVideoId;
 
                 const item = document.createElement('div');
-                item.className = `p-2.5 rounded-2xl flex items-center gap-3 cursor-pointer transition-all ${isPlaying ? 'bg-indigo-600/20 border border-indigo-500/30' : 'hover:bg-white/5 border border-transparent'}`;
+                item.className = `p-2.5 rounded-2xl flex items-center gap-3 cursor-pointer transition-all ${isPlaying ? 'bg-navy-50 border border-navy-200' : 'hover:bg-slate-100/80 border border-transparent'}`;
                 item.onclick = () => playVideo(video.id);
 
                 item.innerHTML = `
-                    <span class="text-[11px] font-mono text-slate-500 font-bold w-4 text-center">${index + 1}</span>
-                    <img src="${video.thumbnail}" class="w-10 h-10 rounded-xl object-cover shrink-0 border border-white/5">
+                    <span class="text-[11px] font-mono text-slate-400 font-extrabold w-4 text-center">${index + 1}</span>
+                    <img src="${video.thumbnail}" class="w-10 h-10 rounded-xl object-cover shrink-0 border border-slate-200">
                     <div class="flex-1 min-w-0">
-                        <p class="text-xs font-bold truncate ${isPlaying ? 'text-indigo-400' : 'text-slate-200'}">
+                        <p class="text-xs font-bold truncate ${isPlaying ? 'text-navy-600' : 'text-navy-950'}">
                             ${escapeHtml(video.title)}
                         </p>
-                        <p class="text-[10px] text-slate-400">Music LABS</p>
+                        <p class="text-[10px] text-slate-500 font-semibold">Music LABS</p>
                     </div>
                 `;
                 container.appendChild(item);
@@ -1216,15 +1525,15 @@
             const video = videosList.find(v => v.id === videoId) || {
                 title: "Music LABS Official Release",
                 views: "HD",
-                thumbnail: "https://placehold.co/100x100/6366f1/ffffff?text=ML"
+                thumbnail: "https://placehold.co/100x100/0b1329/ffffff?text=ML"
             };
 
             document.getElementById('heroTrackTitle').innerText = video.title;
-            document.getElementById('heroViews').innerText = `${video.views} views`;
+            document.getElementById('heroViews').innerText = `${video.views} lượt xem`;
             document.getElementById('heroDate').innerText = formatDate(video.publishedAt);
 
             document.getElementById('currentTrackTitle').innerText = video.title;
-            document.getElementById('currentTrackViews').innerText = `${video.views} views`;
+            document.getElementById('currentTrackViews').innerText = `${video.views} lượt xem`;
 
             document.getElementById('barTitle').innerText = video.title;
             document.getElementById('barThumb').src = video.thumbnail;
@@ -1263,7 +1572,7 @@
             if (!currentPlayingVideoId) return;
             const video = videosList.find(v => v.id === currentPlayingVideoId) || {
                 title: "Music LABS Track",
-                thumbnail: "https://placehold.co/120x80/6366f1/ffffff?text=ML"
+                thumbnail: "https://placehold.co/120x80/0b1329/ffffff?text=ML"
             };
 
             document.getElementById('dlModalTitle').innerText = video.title;
@@ -1279,7 +1588,7 @@
             if (!currentPlayingVideoId) return;
             const videoUrl = `https://www.youtube.com/watch?v=${currentPlayingVideoId}`;
             const cobaltUrl = `https://cobalt.tools/#${encodeURIComponent(videoUrl)}`;
-            showToast(`Opening high-speed ${format.toUpperCase()} downloader...`);
+            showToast(`Đang mở công cụ tải ${format.toUpperCase()} tốc độ cao...`);
             window.open(cobaltUrl, '_blank');
             closeDownloadModal();
         }
@@ -1288,7 +1597,7 @@
             if (!currentPlayingVideoId) return;
             const url = `https://www.youtube.com/watch?v=${currentPlayingVideoId}`;
             copyToClipboard(url);
-            showToast("Video URL copied to clipboard!");
+            showToast("Đã sao chép liên kết video!");
             closeDownloadModal();
         }
 
@@ -1296,15 +1605,97 @@
             if (!videoId) return;
             if (favoriteIds.includes(videoId)) {
                 favoriteIds = favoriteIds.filter(id => id !== videoId);
-                showToast('Removed from Favorites');
+                showToast('Đã xóa khỏi danh sách Yêu thích');
             } else {
                 favoriteIds.push(videoId);
-                showToast('Saved to Favorites!');
+                showToast('Đã thêm vào danh sách Yêu thích!');
             }
             localStorage.setItem('MUSICLABS_FAVS', JSON.stringify(favoriteIds));
+            if (typeof window.saveFavoritesToCloud === 'function') {
+                window.saveFavoritesToCloud(favoriteIds);
+            }
             updateFavBadges();
             updateLikeButtonState(videoId);
             renderVideosGrid();
+        }
+
+        function updateUserAuthUI(user) {
+            const userAuthContainer = document.getElementById('userAuthContainer');
+            const sideAvatar = document.getElementById('sideAvatar');
+            const sideChannelTitle = document.getElementById('sideChannelTitle');
+
+            if (!userAuthContainer) return;
+
+            if (user && (user.displayName || user.email)) {
+                const photo = user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(user.displayName || user.email)}`;
+                const name = user.displayName || user.email.split('@')[0];
+
+                userAuthContainer.innerHTML = `
+                    <div class="flex items-center gap-2.5 bg-white p-1.5 pl-3 rounded-2xl border border-slate-200 shadow-float-sm">
+                        <img src="${photo}" class="w-7 h-7 rounded-full object-cover border border-navy-600/40">
+                        <div class="hidden sm:block text-left">
+                            <p class="text-xs font-bold text-navy-950 leading-tight max-w-[120px] truncate">${escapeHtml(name)}</p>
+                            <p class="text-[9px] text-navy-600 font-bold leading-none flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-navy-600 animate-pulse"></span> SoundMus Cloud
+                            </p>
+                        </div>
+                        <button onclick="handleSignOut()" title="Đăng xuất SoundMus Cloud" class="p-1.5 hover:bg-rose-50 text-slate-400 hover:text-rose-600 rounded-xl transition-all">
+                            <iconify-icon icon="line-md:logout" class="text-base"></iconify-icon>
+                        </button>
+                    </div>
+                `;
+
+                if (sideAvatar) sideAvatar.src = photo;
+                if (sideChannelTitle) sideChannelTitle.innerText = name;
+            } else {
+                userAuthContainer.innerHTML = `
+                    <button onclick="openAuthModal()" class="px-4 py-2.5 bg-navy-950 hover:bg-navy-900 text-white font-bold text-xs rounded-2xl shadow-glow-black transition-all flex items-center gap-2 transform hover:scale-105">
+                        <iconify-icon icon="line-md:account" class="text-base"></iconify-icon>
+                        <span>Đăng Nhập</span>
+                    </button>
+                `;
+            }
+        }
+
+        function openAuthModal() {
+            document.getElementById('authModal').classList.remove('hidden');
+            document.getElementById('authErrorMsg').classList.add('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const regForm = document.getElementById('registerForm');
+            const tabLogin = document.getElementById('authTabLogin');
+            const tabReg = document.getElementById('authTabRegister');
+            const errorEl = document.getElementById('authErrorMsg');
+
+            errorEl.classList.add('hidden');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                tabLogin.className = "flex-1 py-2 rounded-xl text-xs font-bold bg-navy-950 text-white shadow-sm transition-all";
+                tabReg.className = "flex-1 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-navy-950 transition-all";
+            } else {
+                regForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+                tabReg.className = "flex-1 py-2 rounded-xl text-xs font-bold bg-navy-950 text-white shadow-sm transition-all";
+                tabLogin.className = "flex-1 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-navy-950 transition-all";
+            }
+        }
+
+        function selectAvatar(url, btn) {
+            document.getElementById('selectedAvatarUrl').value = url;
+            document.querySelectorAll('.avatar-option').forEach(b => {
+                b.classList.remove('border-navy-600');
+                b.classList.add('border-transparent');
+            });
+            btn.classList.remove('border-transparent');
+            btn.classList.add('border-navy-600');
         }
 
         function updateFavBadges() {
@@ -1317,7 +1708,7 @@
             const isFav = favoriteIds.includes(videoId);
             
             if (btn) {
-                btn.innerHTML = `<iconify-icon icon="${isFav ? 'line-md:heart-filled' : 'line-md:heart'}" class="text-lg ${isFav ? 'text-rose-500' : 'text-slate-300'}"></iconify-icon>`;
+                btn.innerHTML = `<iconify-icon icon="${isFav ? 'line-md:heart-filled' : 'line-md:heart'}" class="text-lg ${isFav ? 'text-rose-500' : 'text-slate-600'}"></iconify-icon>`;
             }
             if (barBtnIcon) {
                 barBtnIcon.setAttribute('icon', isFav ? 'line-md:heart-filled' : 'line-md:heart');
@@ -1349,8 +1740,8 @@
 
         function showToast(msg) {
             const toast = document.createElement('div');
-            toast.className = 'fixed bottom-20 right-6 z-50 bg-dark-800 text-white border border-white/10 px-4 py-3 rounded-2xl shadow-2xl text-xs font-semibold flex items-center gap-2.5';
-            toast.innerHTML = `<iconify-icon icon="line-md:confirm-circle-twotone" class="text-spotify-green text-lg"></iconify-icon><span>${escapeHtml(msg)}</span>`;
+            toast.className = 'fixed bottom-24 right-6 z-50 bg-navy-950 text-white border border-navy-800 px-4 py-3 rounded-2xl shadow-2xl text-xs font-bold flex items-center gap-2.5';
+            toast.innerHTML = `<iconify-icon icon="line-md:confirm-circle-twotone" class="text-emerald-400 text-lg"></iconify-icon><span>${escapeHtml(msg)}</span>`;
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         }
@@ -1390,12 +1781,12 @@
         }
 
         function formatDate(isoStr) {
-            if (!isoStr) return 'Recently';
+            if (!isoStr) return 'Mới đây';
             try {
                 const date = new Date(isoStr);
-                return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                return date.toLocaleDateString('vi-VN', { year: 'numeric', month: 'short', day: 'numeric' });
             } catch (e) {
-                return 'Recently';
+                return 'Mới đây';
             }
         }
 
