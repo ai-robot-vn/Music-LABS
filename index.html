@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi" class="light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MusicLABS - Kênh Âm Nhạc Chất Lượng Cao (Official)</title>
+    <title>MusicLABS - Official Music Video Hub</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,33 +14,30 @@
                 extend: {
                     colors: {
                         brand: {
-                            50: '#f0f3ff',
+                            50: '#eef2ff',
                             100: '#e0e7ff',
                             500: '#6366f1',
                             600: '#4f46e5',
                             700: '#4338ca',
-                            accent: '#06b6d4',
-                            pink: '#ec4899'
-                        },
-                        lightbg: '#f8fafc',
-                        cardbg: '#ffffff'
+                        }
                     },
                     fontFamily: {
-                        sans: ['Outfit', 'Inter', 'sans-serif'],
+                        sans: ['Poppins', 'Inter', 'sans-serif'],
                     },
                     boxShadow: {
-                        'soft-xl': '0 20px 40px -15px rgba(99, 102, 241, 0.08)',
-                        'glow': '0 0 25px rgba(6, 182, 212, 0.25)',
+                        'glow-primary': '0 10px 25px -5px rgba(79, 70, 229, 0.25)',
+                        'light-card': '0 10px 30px -5px rgba(15, 23, 42, 0.05), 0 4px 6px -2px rgba(15, 23, 42, 0.02)',
+                        'subtle-hover': '0 20px 35px -10px rgba(15, 23, 42, 0.12)',
                     }
                 }
             }
         }
     </script>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts - Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
 
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -48,414 +45,298 @@
     <!-- YouTube IFrame API -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
-    <!-- Custom CSS Styles -->
     <style>
+        /* Light Ambient Radial Gradient Background */
         body {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+            background-color: #f8fafc;
             color: #0f172a;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 12% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 88% 18%, rgba(168, 85, 247, 0.07) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 90%, rgba(236, 72, 153, 0.06) 0%, transparent 45%),
+                radial-gradient(circle at 0% 100%, rgba(99, 102, 241, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
         }
 
-        /* Custom Scrollbar */
+        /* Light Glassmorphism Containers */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+
+        /* Custom Scrollbars */
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
             background: #f1f5f9;
         }
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
-            border-radius: 4px;
+            border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
 
-        /* Glassmorphism elements */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+        /* Full video tile card hover animations */
+        .full-video-card {
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .full-video-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 20px 35px -10px rgba(15, 23, 42, 0.2), 0 0 20px rgba(99, 102, 241, 0.2);
         }
 
-        .glass-card {
-            background: #ffffff;
-            border: 1px solid rgba(226, 232, 240, 0.9);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .glass-card:hover {
-            border-color: rgba(99, 102, 241, 0.4);
-            transform: translateY(-4px);
-            box-shadow: 0 16px 32px -10px rgba(79, 70, 229, 0.12);
+        /* Sound equalizer wave animation */
+        @keyframes soundWave {
+            0%, 100% { height: 4px; }
+            50% { height: 16px; }
         }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #4f46e5 0%, #0891b2 50%, #db2777 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .wave-bar {
+            animation: soundWave 1.2s ease-in-out infinite;
         }
-
-        .gradient-bg {
-            background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
-        }
-
-        /* Visualizer Canvas */
-        #visualizerCanvas {
-            border-radius: 12px;
-            width: 100%;
-            height: 50px;
-        }
+        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+<body class="selection:bg-indigo-500 selection:text-white flex flex-col min-h-screen">
 
-    <!-- APP HEADER -->
-    <header class="sticky top-0 z-40 glass-panel border-b border-slate-200/80 px-4 lg:px-8 py-3.5 transition-all duration-300 shadow-sm">
+    <!-- NAVIGATION HEADER -->
+    <header class="sticky top-0 z-50 glass-nav px-4 lg:px-8 py-3.5 transition-all shadow-sm">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
             
-            <!-- Brand Logo & Title -->
-            <div class="flex items-center gap-3">
-                <div class="relative group cursor-pointer" onclick="scrollToTop()">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-cyan-400 to-pink-500 rounded-full blur opacity-60 group-hover:opacity-100 transition duration-300"></div>
-                    <img id="siteLogo" src="https://placehold.co/120x120/4f46e5/ffffff?text=ML" 
+            <!-- Brand Identity -->
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="scrollToTop()">
+                <div class="relative">
+                    <img id="siteLogo" src="https://placehold.co/100x100/4f46e5/ffffff?text=ML" 
                          alt="MusicLABS Logo" 
-                         class="relative w-11 h-11 rounded-full object-cover border-2 border-white shadow-md">
+                         class="w-10 h-10 rounded-xl object-cover ring-2 ring-indigo-500/30 group-hover:ring-indigo-500 transition-all shadow-md">
+                    <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center" title="Verified Channel">
+                        <i class="fa-solid fa-check text-[7px] text-white"></i>
+                    </span>
                 </div>
                 <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="text-xl font-extrabold tracking-wider gradient-text uppercase">MusicLABS</h1>
-                        <span class="bg-indigo-50 text-indigo-700 border border-indigo-200 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 shadow-sm">
-                            <i class="fa-solid fa-circle-check text-cyan-500"></i> OFFICIAL
-                        </span>
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-extrabold tracking-tight text-slate-900 text-lg uppercase">Music<span class="text-indigo-600">LABS</span></span>
+                        <i class="fa-solid fa-circle-check text-indigo-600 text-xs" title="Official Channel"></i>
                     </div>
-                    <p class="text-xs text-slate-500 hidden sm:block font-medium">Kênh Âm Nhạc Chất Lượng Cao • Bộ Lọc Chống Rè DSP</p>
+                    <p class="text-[11px] text-slate-500 font-medium hidden sm:block">Audio Visual Experience</p>
                 </div>
             </div>
 
-            <!-- Search Bar -->
-            <div class="flex-1 max-w-md mx-2 hidden md:block">
+            <!-- Central Search Bar -->
+            <div class="flex-1 max-w-md mx-4 hidden md:block">
                 <div class="relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                    <input type="text" id="searchInput" placeholder="Tìm bài hát trong kênh MusicLABS..." 
-                           class="w-full bg-slate-100/80 border border-slate-200 rounded-full pl-10 pr-9 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all">
-                    <button id="clearSearchBtn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                    <input type="text" id="searchInput" placeholder="Search tracks, videos from MusicLABS..." 
+                           class="w-full bg-slate-100/90 border border-slate-200 rounded-xl pl-9 pr-9 py-2 text-xs font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all">
+                    <button id="clearSearchBtn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-xs">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Header Right Actions -->
-            <div class="flex items-center gap-2 sm:gap-3">
-                <!-- Audio Studio Filter Toggle Button -->
-                <button id="toggleAudioStudioBtn" class="flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-indigo-50 to-cyan-50 hover:from-indigo-100 hover:to-cyan-100 border border-indigo-200/80 rounded-xl text-xs sm:text-sm font-semibold text-indigo-900 transition-all shadow-sm">
-                    <i class="fa-solid fa-sliders text-indigo-600"></i>
-                    <span class="hidden sm:inline">Bộ Lọc Âm Thanh DSP</span>
-                    <span id="dspBadge" class="bg-indigo-600 text-white text-[10px] font-extrabold px-1.5 py-0.2 rounded">BẬT</span>
+            <!-- Header Action Buttons -->
+            <div class="flex items-center gap-2.5">
+                <button id="syncChannelBtn" title="Sync Latest Releases" 
+                        class="flex items-center gap-2 px-3.5 py-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200 transition-all">
+                    <i id="syncIcon" class="fa-solid fa-arrows-rotate text-indigo-600"></i>
+                    <span class="hidden sm:inline">Refresh</span>
                 </button>
 
-                <!-- Sync Updates Button -->
-                <button id="syncChannelBtn" title="Tải lại video mới nhất từ YouTube" class="p-2.5 bg-white hover:bg-slate-100 border border-slate-200 text-indigo-600 rounded-xl transition-all shadow-sm relative">
-                    <i id="syncIcon" class="fa-solid fa-arrows-rotate text-sm"></i>
-                    <span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                    </span>
-                </button>
-
-                <!-- YouTube Channel External Link -->
                 <a href="https://www.youtube.com/@music-labs-MUSIC" target="_blank" rel="noopener" 
-                   class="flex items-center gap-1.5 px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition-all shadow-md shadow-red-600/20">
-                    <i class="fa-brands fa-youtube text-base"></i>
-                    <span class="hidden lg:inline">Xem Kênh YouTube</span>
+                   class="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-xl transition-all shadow-md hover:shadow-red-600/30">
+                    <i class="fa-brands fa-youtube text-sm"></i>
+                    <span>YouTube</span>
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- AUDIO FILTER DSP STUDIO DRAWER -->
-    <div id="audioStudioPanel" class="hidden glass-panel border-b border-indigo-100 bg-white/95 transition-all duration-300 shadow-lg">
-        <div class="max-w-7xl mx-auto p-4 sm:p-6">
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-200 pb-4 mb-4">
-                <div>
-                    <div class="flex items-center gap-2">
-                        <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-wand-magic-sparkles text-indigo-600"></i>
-                            Hệ Thống Lọc Âm Thanh Chống Rè MusicLABS DSP Engine
-                        </h2>
-                        <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-0.5 rounded-full font-bold">
-                            Đã Kích Hoạt
-                        </span>
-                    </div>
-                    <p class="text-xs text-slate-500 mt-1">Lọc triệt để dải âm rè vỡ loa, loại bỏ tiếng ù tần số thấp và cân bằng âm sắc ca sĩ mượt mà.</p>
-                </div>
-
-                <!-- Presets Quick Choice -->
-                <div class="flex flex-wrap items-center gap-2">
-                    <span class="text-xs font-bold text-slate-500">Chế độ sẵn:</span>
-                    <button onclick="setEqPreset('crystal')" class="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs rounded-lg border border-indigo-200 transition-all">
-                        💎 Crystal Clear (Chống Rè)
-                    </button>
-
-                    <button onclick="setEqPreset('bass')" class="px-3 py-1.5 bg-cyan-50 hover:bg-cyan-100 text-cyan-700 font-semibold text-xs rounded-lg border border-cyan-200 transition-all">
-                        🔊 Deep Bass & Warm
-                    </button>
-
-                    <button onclick="setEqPreset('vocal')" class="px-3 py-1.5 bg-pink-50 hover:bg-pink-100 text-pink-700 font-semibold text-xs rounded-lg border border-pink-200 transition-all">
-                        🎤 Vocal Clarity
-                    </button>
-
-                    <button onclick="setEqPreset('flat')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-lg transition-all">
-                        ⚙️ Mặc định (Flat)
-                    </button>
-                </div>
-            </div>
-
-            <!-- Equalizer Controls Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 items-center">
-                
-                <!-- Equalizer Slider 1: Anti-Distortion Highpass Cut -->
-                <div class="flex flex-col gap-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <div class="flex justify-between text-xs">
-                        <span class="font-bold text-slate-700"><i class="fa-solid fa-shield-halved text-indigo-500 mr-1"></i> Cắt Tần Số Ù</span>
-                        <span id="hpCutVal" class="text-indigo-600 font-mono font-bold">45Hz</span>
-                    </div>
-                    <input type="range" id="hpCutSlider" min="20" max="120" value="45" class="w-full accent-indigo-600">
-                    <span class="text-[10px] text-slate-400">Khử méo rè bass trầm</span>
-                </div>
-
-                <!-- Equalizer Slider 2: Bass Enhancement -->
-                <div class="flex flex-col gap-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <div class="flex justify-between text-xs">
-                        <span class="font-bold text-slate-700"><i class="fa-solid fa-drum text-cyan-500 mr-1"></i> Âm Trầm (Bass)</span>
-                        <span id="bassVal" class="text-cyan-600 font-mono font-bold">+3 dB</span>
-                    </div>
-                    <input type="range" id="bassSlider" min="-10" max="12" value="3" class="w-full accent-cyan-600">
-                    <span class="text-[10px] text-slate-400">Tăng độ trầm lực vòm</span>
-                </div>
-
-                <!-- Equalizer Slider 3: Midrange Clean -->
-                <div class="flex flex-col gap-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <div class="flex justify-between text-xs">
-                        <span class="font-bold text-slate-700"><i class="fa-solid fa-microphone text-emerald-500 mr-1"></i> Trung Âm (Mid)</span>
-                        <span id="midVal" class="text-emerald-600 font-mono font-bold">+2 dB</span>
-                    </div>
-                    <input type="range" id="midSlider" min="-10" max="12" value="2" class="w-full accent-emerald-600">
-                    <span class="text-[10px] text-slate-400">Làm rõ lời ca sĩ</span>
-                </div>
-
-                <!-- Equalizer Slider 4: Treble Softener -->
-                <div class="flex flex-col gap-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <div class="flex justify-between text-xs">
-                        <span class="font-bold text-slate-700"><i class="fa-solid fa-bolt text-pink-500 mr-1"></i> Treble Mịn</span>
-                        <span id="trebleVal" class="text-pink-600 font-mono font-bold">+1 dB</span>
-                    </div>
-                    <input type="range" id="trebleSlider" min="-10" max="12" value="1" class="w-full accent-pink-600">
-                    <span class="text-[10px] text-slate-400">Chống xít chói tai</span>
-                </div>
-
-                <!-- Equalizer Slider 5: Soft Dynamic Limiter -->
-                <div class="flex flex-col gap-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <div class="flex justify-between text-xs">
-                        <span class="font-bold text-slate-700"><i class="fa-solid fa-compress text-amber-500 mr-1"></i> Khống Chế Méo</span>
-                        <span id="limiterVal" class="text-amber-600 font-mono font-bold">-1.5 dB</span>
-                    </div>
-                    <input type="range" id="limiterSlider" min="-12" max="0" value="-1.5" class="w-full accent-amber-600">
-                    <span class="text-[10px] text-slate-400">Nén biên độ cực đại</span>
-                </div>
-
-                <!-- Visualizer Mini Display -->
-                <div class="flex flex-col justify-center gap-1 bg-slate-900 p-3 rounded-xl border border-slate-800 text-white">
-                    <span class="text-[10px] font-bold text-cyan-400 uppercase tracking-wider flex items-center justify-between">
-                        <span>Phổ Âm DSP</span>
-                        <i class="fa-solid fa-chart-simple animate-pulse"></i>
-                    </span>
-                    <canvas id="visualizerCanvas"></canvas>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN CONTENT CONTAINER -->
+    <!-- MAIN APP CONTAINER -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
 
-        <!-- HERO CHANNEL SHOWCASE -->
-        <section class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white shadow-2xl">
-            <!-- Background Banner Overlay -->
-            <div id="channelBannerBg" class="absolute inset-0 bg-cover bg-center opacity-30"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+        <!-- HERO SPOTLIGHT BANNER -->
+        <section class="relative rounded-3xl overflow-hidden glass-card shadow-light-card border border-slate-200">
+            <!-- Channel Banner Ambient Background -->
+            <div id="channelBannerBg" class="absolute inset-0 bg-cover bg-center opacity-20"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/60"></div>
 
-            <div class="relative z-10 p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-center md:items-end justify-between gap-6">
-                <!-- Channel Info Left -->
-                <div class="flex flex-col sm:flex-row items-center sm:items-end gap-6 text-center sm:text-left">
-                    <div class="relative">
-                        <img id="heroAvatar" src="https://placehold.co/180x180/4f46e5/ffffff?text=MusicLABS" 
+            <div class="relative z-10 p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                
+                <!-- Channel Metadata -->
+                <div class="flex flex-col sm:flex-row items-center sm:items-center gap-5 text-center sm:text-left">
+                    <div class="relative shrink-0">
+                        <img id="heroAvatar" src="https://placehold.co/150x150/4f46e5/ffffff?text=MusicLABS" 
                              alt="MusicLABS Avatar" 
-                             class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover border-4 border-white/20 shadow-2xl">
-                        <span class="absolute -bottom-2 -right-2 bg-gradient-to-r from-indigo-500 to-cyan-500 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full shadow">
-                            HQ AUDIO
-                        </span>
+                             class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover ring-4 ring-indigo-500/20 shadow-xl">
                     </div>
 
-                    <div class="space-y-2">
-                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                            <h2 id="heroChannelTitle" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight">Music LABS</h2>
-                            <i class="fa-solid fa-circle-check text-cyan-400 text-xl" title="Kênh chính thức đã xác minh"></i>
+                    <div class="space-y-1.5">
+                        <div class="flex items-center justify-center sm:justify-start gap-2">
+                            <h1 id="heroChannelTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Music LABS</h1>
+                            <i class="fa-solid fa-circle-check text-indigo-600 text-lg" title="Official Verified"></i>
                         </div>
                         
-                        <p id="heroHandle" class="text-sm font-medium text-indigo-200">@music-labs-MUSIC</p>
+                        <p id="heroHandle" class="text-xs font-semibold text-indigo-600">@music-labs-MUSIC</p>
 
-                        <!-- Stats Pills -->
-                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-1 text-xs">
-                            <div class="bg-black/40 backdrop-blur px-3 py-1.5 rounded-xl border border-white/10 text-slate-200">
-                                <i class="fa-solid fa-users text-indigo-400 mr-1.5"></i>
-                                <span id="statSubscribers" class="font-bold text-white">Đang tải...</span> Đăng ký
-                            </div>
-                            <div class="bg-black/40 backdrop-blur px-3 py-1.5 rounded-xl border border-white/10 text-slate-200">
-                                <i class="fa-solid fa-video text-cyan-400 mr-1.5"></i>
-                                <span id="statVideos" class="font-bold text-white">--</span> Video
-                            </div>
-                            <div class="bg-black/40 backdrop-blur px-3 py-1.5 rounded-xl border border-white/10 text-slate-200">
-                                <i class="fa-solid fa-shield-cat text-emerald-400 mr-1.5"></i>
-                                <span class="font-bold text-emerald-300">Đã Lọc Méo Tiếng</span>
-                            </div>
+                        <!-- Live Channel Statistics Badges -->
+                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-1 text-xs">
+                            <span class="bg-slate-100/90 border border-slate-200 px-3 py-1 rounded-lg text-slate-600 font-medium">
+                                <i class="fa-solid fa-users text-indigo-600 mr-1.5"></i>
+                                <strong id="statSubscribers" class="text-slate-900 font-bold">--</strong> Subscribers
+                            </span>
+                            <span class="bg-slate-100/90 border border-slate-200 px-3 py-1 rounded-lg text-slate-600 font-medium">
+                                <i class="fa-solid fa-video text-indigo-600 mr-1.5"></i>
+                                <strong id="statVideos" class="text-slate-900 font-bold">--</strong> Videos
+                            </span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Hero Action Buttons -->
-                <div class="flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto">
-                    <button onclick="playFirstTrack()" class="flex-1 sm:flex-initial px-6 py-3.5 bg-gradient-to-r from-indigo-500 to-cyan-500 hover:from-indigo-600 hover:to-cyan-600 text-white font-bold rounded-2xl shadow-xl flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02]">
-                        <i class="fa-solid fa-play text-lg"></i>
-                        <span>Phát Video Mới Nhất</span>
+                <div class="flex items-center gap-3 w-full sm:w-auto">
+                    <button onclick="playFirstTrack()" class="flex-1 sm:flex-initial px-6 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl shadow-glow-primary transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Play Latest Video</span>
                     </button>
                     
                     <a href="https://www.youtube.com/@music-labs-MUSIC?sub_confirmation=1" target="_blank" rel="noopener"
-                       class="px-5 py-3.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-2xl border border-red-500/40 flex items-center justify-center gap-2 transition-all shadow-md">
-                        <i class="fa-brands fa-youtube text-lg"></i>
-                        <span>Đăng Ký Kênh</span>
+                       class="px-5 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs rounded-xl border border-slate-200 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-youtube text-red-600"></i>
+                        <span>Subscribe</span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- MAIN PLAYER SECTION -->
+        <!-- THEATER PLAYER & QUEUE SECTION -->
         <section id="playerSection" class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             
-            <!-- Video Player Window (Left 2 cols) -->
-            <div class="lg:col-span-2 space-y-4">
-                <div class="relative bg-black rounded-3xl overflow-hidden border border-slate-200 shadow-xl aspect-video group">
-                    <!-- YouTube iFrame Player -->
+            <!-- Embedded YouTube Theater Player -->
+            <div class="lg:col-span-2 space-y-3">
+                <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-xl aspect-video border border-slate-200">
                     <div id="youtubePlayer" class="w-full h-full"></div>
-
-                    <!-- Filter Info Badge Overlay -->
-                    <div class="absolute top-4 left-4 pointer-events-none z-10 flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-cyan-500/30 text-xs font-semibold text-cyan-300 shadow-md">
-                        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-                        <i class="fa-solid fa-sliders text-cyan-400"></i>
-                        <span id="activeFilterLabel">Đang lọc âm thanh: Crystal Clear HQ</span>
-                    </div>
                 </div>
 
-                <!-- Video Title & Metadata Details -->
-                <div class="glass-panel p-5 rounded-2xl shadow-sm space-y-3">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <h3 id="currentTrackTitle" class="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
-                            Đang tải video mới nhất từ MusicLABS...
-                        </h3>
+                <!-- Video Details Box -->
+                <div class="glass-card p-5 rounded-2xl border border-slate-200 shadow-light-card space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                        <h2 id="currentTrackTitle" class="text-base sm:text-lg font-bold text-slate-900 leading-snug flex-1">
+                            Loading latest video from MusicLABS...
+                        </h2>
                         
+                        <!-- Interactive Quick Actions -->
                         <div class="flex items-center gap-2 shrink-0">
-                            <button id="likeTrackBtn" class="p-2.5 bg-slate-100 hover:bg-pink-50 text-slate-600 hover:text-pink-600 rounded-xl border border-slate-200 transition-all shadow-sm" title="Lưu bài hát yêu thích">
-                                <i class="fa-regular fa-heart text-lg"></i>
+                            <button id="likeTrackBtn" class="p-2.5 bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 rounded-xl border border-slate-200 transition-all" title="Add to Favorites">
+                                <i class="fa-regular fa-heart text-base"></i>
                             </button>
                             
-                            <button id="shareTrackBtn" class="p-2.5 bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 rounded-xl border border-slate-200 transition-all shadow-sm" title="Chia sẻ bài hát">
-                                <i class="fa-solid fa-share-nodes text-lg"></i>
+                            <button id="shareTrackBtn" class="p-2.5 bg-slate-100 hover:bg-indigo-50 text-slate-600 hover:text-indigo-600 rounded-xl border border-slate-200 transition-all" title="Share Video">
+                                <i class="fa-solid fa-share-nodes text-base"></i>
                             </button>
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-500 border-t border-slate-100 pt-3">
-                        <span id="currentTrackViews"><i class="fa-solid fa-eye text-indigo-500 mr-1"></i> -- lượt xem</span>
-                        <span id="currentTrackDate"><i class="fa-solid fa-clock text-cyan-500 mr-1"></i> --</span>
-                        <span class="text-emerald-600 font-bold flex items-center gap-1">
-                            <i class="fa-solid fa-shield-halved"></i> Đã xử lý âm thanh không bị rè
+                    <div class="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-500 border-t border-slate-200/80 pt-3">
+                        <span id="currentTrackViews"><i class="fa-solid fa-eye text-indigo-600 mr-1.5"></i>-- views</span>
+                        <span id="currentTrackDate"><i class="fa-solid fa-calendar-days text-indigo-600 mr-1.5"></i>--</span>
+                        <span class="text-emerald-600 font-semibold flex items-center gap-1">
+                            <i class="fa-solid fa-shield-check"></i> Official MusicLABS Release
                         </span>
                     </div>
                 </div>
             </div>
 
-            <!-- Up Next / Quick Queue Sidebar (Right 1 col) -->
-            <div class="glass-panel p-5 rounded-2xl shadow-sm space-y-4 max-h-[580px] flex flex-col">
+            <!-- Auto-Playlist Queue Sidebar -->
+            <div class="glass-card p-5 rounded-2xl border border-slate-200 shadow-light-card space-y-3 max-h-[560px] flex flex-col">
                 <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-                    <h4 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                    <div class="flex items-center gap-2">
                         <i class="fa-solid fa-list-ul text-indigo-600"></i>
-                        <span>Danh Sách Phát</span>
-                    </h4>
-                    <span id="queueCountBadge" class="bg-indigo-50 text-indigo-700 font-bold text-xs px-2.5 py-0.5 rounded-full border border-indigo-200">0 Bài</span>
+                        <h3 class="font-bold text-slate-900 text-sm">Up Next</h3>
+                    </div>
+                    <span id="queueCountBadge" class="bg-indigo-50 text-indigo-700 font-bold text-xs px-2.5 py-0.5 rounded-full border border-indigo-200">0 Videos</span>
                 </div>
 
-                <!-- Queue Playlist Container -->
+                <!-- Queue Item Scroll Container -->
                 <div id="queueContainer" class="flex-1 overflow-y-auto space-y-2 pr-1">
-                    <!-- Dynamic Queue items will be inserted here -->
+                    <!-- Dynamic Queue list elements populated by JS -->
                 </div>
             </div>
         </section>
 
-        <!-- VIDEO CATALOG GRID SECTION -->
+        <!-- MUSIC VIDEO CATALOG LIBRARY -->
         <section class="space-y-6">
             
-            <!-- Section Header & Filter Tabs -->
+            <!-- Library Filter Header -->
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 pb-4">
                 <div>
-                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <h3 class="text-xl font-extrabold text-slate-900 flex items-center gap-2.5">
                         <i class="fa-solid fa-compact-disc text-indigo-600"></i>
-                        <span>Kho Video Âm Nhạc MusicLABS</span>
+                        <span>MusicLABS Video Catalog</span>
                     </h3>
-                    <p class="text-xs text-slate-500 mt-0.5">Cập nhật tự động trực tiếp từ kênh YouTube chính thức</p>
+                    <p class="text-xs text-slate-500 mt-0.5">Live auto-synchronized video releases via YouTube Data API v3</p>
                 </div>
 
-                <!-- Category Tabs -->
+                <!-- Filter Tabs -->
                 <div class="flex flex-wrap items-center gap-2">
-                    <button onclick="switchTab('all')" id="tabAll" class="px-4 py-2 bg-indigo-600 text-white font-bold text-xs rounded-xl shadow-md transition-all">
-                        Tất Cả Video
+                    <button onclick="switchTab('all')" id="tabAll" class="px-4 py-2 bg-indigo-600 text-white font-semibold text-xs rounded-xl shadow-glow-primary transition-all">
+                        All Videos
                     </button>
-                    <button onclick="switchTab('latest')" id="tabLatest" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">
-                        ⚡ Mới Nhất
+                    <button onclick="switchTab('latest')" id="tabLatest" class="px-4 py-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition-all">
+                        Latest
                     </button>
-                    <button onclick="switchTab('favorites')" id="tabFavorites" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-heart text-pink-500"></i> Yêu Thích (<span id="favCount">0</span>)
+                    <button onclick="switchTab('favorites')" id="tabFavorites" class="px-4 py-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-heart text-rose-500"></i> Favorites (<span id="favCount">0</span>)
                     </button>
                 </div>
             </div>
 
-            <!-- Mobile Search Bar -->
+            <!-- Mobile Search Bar Filter -->
             <div class="md:hidden">
                 <div class="relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                    <input type="text" id="mobileSearchInput" placeholder="Tìm bài hát..." 
-                           class="w-full bg-white border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-800">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                    <input type="text" id="mobileSearchInput" placeholder="Search tracks..." 
+                           class="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-4 py-2 text-xs font-medium text-slate-800">
                 </div>
             </div>
 
-            <!-- Videos Grid -->
-            <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-                <!-- Dynamic video cards will be rendered here -->
+            <!-- FULL VIDEO OVERLAY TILE GRID -->
+            <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Dynamic YouTube Full-Background Video Overlay Cards Rendered Here -->
             </div>
 
-            <!-- Loading Spinner & Load More Controls -->
-            <div class="flex flex-col items-center justify-center pt-6 space-y-3">
-                <div id="loadingSpinner" class="hidden flex items-center gap-3 text-indigo-600 text-sm font-semibold bg-white px-5 py-3 rounded-full border border-slate-200 shadow-sm">
-                    <i class="fa-solid fa-circle-notch fa-spin text-lg"></i>
-                    <span>Đang kết nối YouTube Data API v3...</span>
+            <!-- Pagination & Spinner Controls -->
+            <div class="flex flex-col items-center justify-center pt-4 space-y-3">
+                <div id="loadingSpinner" class="hidden flex items-center gap-2.5 text-indigo-700 text-xs font-semibold glass-card px-5 py-3 rounded-xl border border-slate-200 shadow-md">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+                    <span>Connecting to YouTube API v3...</span>
                 </div>
 
-                <button id="loadMoreBtn" class="hidden px-8 py-3 bg-white hover:bg-slate-50 border border-slate-200 text-indigo-600 font-bold rounded-2xl transition-all text-sm shadow-sm hover:shadow">
-                    <i class="fa-solid fa-plus mr-2"></i> Tải Thêm Video
+                <button id="loadMoreBtn" class="hidden px-7 py-3 bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 text-xs font-bold rounded-xl transition-all shadow-md hover:border-indigo-400">
+                    Load More Videos
                 </button>
             </div>
         </section>
@@ -463,30 +344,29 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="glass-panel border-t border-slate-200 mt-16 py-8 px-4 text-center text-xs text-slate-500">
+    <footer class="glass-nav border-t border-slate-200 mt-16 py-8 px-4 text-center text-xs text-slate-500">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-2">
-                <span class="font-bold text-slate-800">MusicLABS</span>
-                <span>• Kênh âm nhạc chất lượng cao với bộ lọc âm thanh chống rè</span>
+                <span class="font-extrabold text-slate-900">MusicLABS Official Hub</span>
+                <span>• Premium Music Video Streaming</span>
             </div>
             
-            <p>Sử dụng YouTube Data API v3 & Web Audio DSP Processing Engine</p>
+            <p>Auto-updated via YouTube Data API v3</p>
             
-            <a href="https://www.youtube.com/@music-labs-MUSIC" target="_blank" rel="noopener" class="text-indigo-600 font-bold hover:underline">
+            <a href="https://www.youtube.com/@music-labs-MUSIC" target="_blank" rel="noopener" class="text-indigo-600 font-semibold hover:underline">
                 YouTube: @music-labs-MUSIC
             </a>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- CORE JAVASCRIPT ENGINE -->
     <script>
         /* 
-         * ==========================================
-         * MUSICLABS WEB APPLICATION CORE SCRIPT
-         * ==========================================
+         * MUSICLABS WEB APPLICATION ENGINE
+         * Integrated with YouTube Data API v3
+         * Bright Clean Light Theme with Full-Video Tile Overlay Layout
          */
 
-        // Hardcoded Official YouTube Data API Key provided by user
         const API_KEY = "AIzaSyCWtu49sDuYu7drw01D5niFIS2xweT8XK4";
         const CHANNEL_HANDLE = "music-labs-MUSIC";
         
@@ -494,62 +374,22 @@
         let UPLOADS_PLAYLIST_ID = "";
         let nextPageToken = "";
 
-        // App States
+        // Application State Variables
         let videosList = [];
         let favoriteIds = JSON.parse(localStorage.getItem('MUSICLABS_FAVS') || '[]');
         let currentPlayingVideoId = null;
         let activeTab = 'all';
         let searchQuery = '';
-        let isAudioStudioOpen = false;
 
         // YouTube Player Reference
         let ytPlayer = null;
 
-        // INITIALIZATION
         document.addEventListener('DOMContentLoaded', () => {
-            initVisualizer();
             setupEventListeners();
             loadChannelData();
             updateFavBadge();
         });
 
-        // VISUALIZER SIMULATION CANVAS
-        function initVisualizer() {
-            const canvas = document.getElementById('visualizerCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-
-            let angle = 0;
-
-            function draw() {
-                requestAnimationFrame(draw);
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                const barCount = 28;
-                const barWidth = (canvas.width / barCount) - 2;
-
-                for (let i = 0; i < barCount; i++) {
-                    const height = Math.abs(Math.sin(angle + i * 0.25) * (canvas.height * 0.8)) + 4;
-                    const x = i * (barWidth + 2);
-                    const y = canvas.height - height;
-
-                    const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
-                    gradient.addColorStop(0, '#4f46e5');
-                    gradient.addColorStop(0.5, '#06b6d4');
-                    gradient.addColorStop(1, '#ec4899');
-
-                    ctx.fillStyle = gradient;
-                    ctx.fillRect(x, y, barWidth, height);
-                }
-                angle += 0.08;
-            }
-            draw();
-        }
-
-        // SETUP EVENT HANDLERS
         function setupEventListeners() {
             const searchInput = document.getElementById('searchInput');
             const clearSearchBtn = document.getElementById('clearSearchBtn');
@@ -579,25 +419,18 @@
                 });
             }
 
-            // Audio Panel Toggle
-            document.getElementById('toggleAudioStudioBtn').addEventListener('click', () => {
-                const studio = document.getElementById('audioStudioPanel');
-                isAudioStudioOpen = !isAudioStudioOpen;
-                studio.classList.toggle('hidden', !isAudioStudioOpen);
-            });
-
-            // Sync Button
+            // Sync Channel Button
             document.getElementById('syncChannelBtn').addEventListener('click', () => {
                 const icon = document.getElementById('syncIcon');
                 icon.classList.add('fa-spin');
-                showToast('Đang đồng bộ video mới nhất từ YouTube...');
+                showToast('Refreshing latest releases from YouTube...');
                 
                 loadChannelData().finally(() => {
                     setTimeout(() => icon.classList.remove('fa-spin'), 600);
                 });
             });
 
-            // Like / Favorite Button
+            // Favorite Toggle
             document.getElementById('likeTrackBtn').addEventListener('click', () => {
                 if (!currentPlayingVideoId) return;
                 toggleFavorite(currentPlayingVideoId);
@@ -608,7 +441,7 @@
                 if (!currentPlayingVideoId) return;
                 const url = `https://www.youtube.com/watch?v=${currentPlayingVideoId}`;
                 copyToClipboard(url);
-                showToast('Đã sao chép liên kết video!');
+                showToast('Video link copied to clipboard!');
             });
 
             // Load More Button
@@ -617,36 +450,15 @@
                     fetchMoreVideos();
                 }
             });
-
-            // Sliders for Equalizer Labels
-            setupSliderLabel('hpCutSlider', 'hpCutVal', 'Hz');
-            setupSliderLabel('bassSlider', 'bassVal', ' dB');
-            setupSliderLabel('midSlider', 'midVal', ' dB');
-            setupSliderLabel('trebleSlider', 'trebleVal', ' dB');
-            setupSliderLabel('limiterSlider', 'limiterVal', ' dB');
         }
 
-        function setupSliderLabel(sliderId, valId, unit) {
-            const slider = document.getElementById(sliderId);
-            const label = document.getElementById(valId);
-            if (slider && label) {
-                slider.addEventListener('input', () => {
-                    const prefix = (slider.value > 0 && unit.includes('dB')) ? '+' : '';
-                    label.innerText = `${prefix}${slider.value}${unit}`;
-                });
-            }
-        }
-
-        // YOUTUBE DATA API INTEGRATION
         async function loadChannelData() {
             showLoading(true);
             try {
-                // 1. Fetch channel details by handle
                 let channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics,contentDetails,brandingSettings&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`;
                 let res = await fetch(channelUrl);
                 let data = await res.json();
 
-                // If handle lookup requires search fallback
                 if (!data.items || data.items.length === 0) {
                     const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=${encodeURIComponent(CHANNEL_HANDLE)}&key=${API_KEY}`;
                     const searchRes = await fetch(searchUrl);
@@ -668,7 +480,6 @@
                     const avatar = channel.snippet.thumbnails.high?.url || channel.snippet.thumbnails.medium?.url;
                     const banner = channel.brandingSettings?.image?.bannerExternalUrl || '';
 
-                    // Update Channel UI
                     updateChannelUI({
                         title: channel.snippet.title,
                         avatar: avatar,
@@ -677,15 +488,13 @@
                         videoCount: formatNumber(channel.statistics.videoCount)
                     });
 
-                    // 2. Fetch Playlist Videos
                     await fetchPlaylistVideos(UPLOADS_PLAYLIST_ID);
                 } else {
-                    console.error("Không tìm thấy kênh YouTube MusicLABS:", data);
-                    showToast("Không tìm thấy kênh MusicLABS. Kiểm tra kết nối.");
+                    showToast("Could not retrieve channel information.");
                 }
             } catch (err) {
-                console.error("Lỗi khi tải dữ liệu từ YouTube API:", err);
-                showToast("Lỗi khi kết nối với YouTube API.");
+                console.error("YouTube Data API Error:", err);
+                showToast("Error loading data from YouTube API.");
             } finally {
                 showLoading(false);
             }
@@ -693,7 +502,7 @@
 
         async function fetchPlaylistVideos(playlistId) {
             try {
-                const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=20&key=${API_KEY}`;
+                const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=24&key=${API_KEY}`;
                 const res = await fetch(url);
                 const data = await res.json();
 
@@ -712,8 +521,8 @@
                             title: item.snippet.title,
                             thumbnail: item.snippet.thumbnails.maxres?.url || item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium?.url,
                             publishedAt: item.snippet.publishedAt,
-                            views: details.views ? formatNumber(details.views) : 'HQ',
-                            duration: details.duration || 'HQ'
+                            views: details.views ? formatNumber(details.views) : 'HD',
+                            duration: details.duration || 'HD'
                         };
                     });
 
@@ -725,7 +534,7 @@
                     }
                 }
             } catch (err) {
-                console.error("Lỗi lấy danh sách video:", err);
+                console.error("Error loading video playlist:", err);
             }
         }
 
@@ -733,7 +542,7 @@
             if (!nextPageToken) return;
             showLoading(true);
             try {
-                const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${UPLOADS_PLAYLIST_ID}&pageToken=${nextPageToken}&maxResults=20&key=${API_KEY}`;
+                const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${UPLOADS_PLAYLIST_ID}&pageToken=${nextPageToken}&maxResults=24&key=${API_KEY}`;
                 const res = await fetch(url);
                 const data = await res.json();
 
@@ -752,8 +561,8 @@
                             title: item.snippet.title,
                             thumbnail: item.snippet.thumbnails.maxres?.url || item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium?.url,
                             publishedAt: item.snippet.publishedAt,
-                            views: details.views ? formatNumber(details.views) : 'HQ',
-                            duration: details.duration || 'HQ'
+                            views: details.views ? formatNumber(details.views) : 'HD',
+                            duration: details.duration || 'HD'
                         };
                     });
 
@@ -762,7 +571,7 @@
                     renderQueue();
                 }
             } catch (err) {
-                console.error("Lỗi khi tải thêm video:", err);
+                console.error("Error loading more videos:", err);
             } finally {
                 showLoading(false);
             }
@@ -786,7 +595,7 @@
                 }
                 return detailsMap;
             } catch (err) {
-                console.error("Lỗi chi tiết video:", err);
+                console.error("Error fetching video details:", err);
                 return {};
             }
         }
@@ -803,7 +612,6 @@
             }
         }
 
-        // RENDER VIDEO CARDS
         function renderVideosGrid() {
             const grid = document.getElementById('videoGrid');
             grid.innerHTML = '';
@@ -818,9 +626,9 @@
 
             if (filtered.length === 0) {
                 grid.innerHTML = `
-                    <div class="col-span-full py-12 text-center text-slate-400 space-y-3 bg-white rounded-3xl border border-slate-200">
-                        <i class="fa-solid fa-compact-disc text-4xl text-indigo-400 animate-spin"></i>
-                        <p class="text-sm font-medium">Không tìm thấy bài hát phù hợp!</p>
+                    <div class="col-span-full py-16 text-center text-slate-500 space-y-3 glass-card rounded-2xl border border-slate-200">
+                        <i class="fa-solid fa-compact-disc text-4xl text-indigo-500"></i>
+                        <p class="text-xs font-semibold">No matching videos or music found.</p>
                     </div>
                 `;
                 return;
@@ -831,42 +639,57 @@
                 const isFav = favoriteIds.includes(video.id);
 
                 const card = document.createElement('div');
-                card.className = `glass-card rounded-2xl overflow-hidden flex flex-col justify-between group cursor-pointer shadow-sm ${isPlaying ? 'ring-2 ring-indigo-600 border-indigo-600' : ''}`;
-                
+                card.className = `full-video-card relative rounded-2xl overflow-hidden border ${isPlaying ? 'border-indigo-600 ring-2 ring-indigo-500/40 shadow-glow-primary' : 'border-slate-200 shadow-sm'} group cursor-pointer aspect-video bg-slate-900`;
+                card.onclick = () => playVideo(video.id);
+
                 card.innerHTML = `
-                    <div class="relative aspect-video overflow-hidden bg-slate-100" onclick="playVideo('${video.id}')">
-                        <img src="${video.thumbnail}" alt="${escapeHtml(video.title)}" 
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        
-                        <div class="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-600 to-cyan-500 text-white flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100 transition-transform">
-                                <i class="fa-solid fa-play text-lg ml-0.5"></i>
-                            </div>
-                        </div>
+                    <!-- Background Video Thumbnail -->
+                    <img src="${video.thumbnail}" alt="${escapeHtml(video.title)}" 
+                         class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    
+                    <!-- Dark Gradient Overlay for Maximum Text Contrast on Thumbnail -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent group-hover:via-slate-950/60 transition-all duration-300"></div>
 
+                    <!-- Top Overlay Controls -->
+                    <div class="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
                         ${isPlaying ? `
-                            <div class="absolute top-2 left-2 bg-indigo-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow">
-                                <i class="fa-solid fa-volume-high text-[10px] animate-bounce"></i> ĐANG PHÁT
-                            </div>
-                        ` : ''}
+                            <span class="bg-indigo-600 text-white text-[10px] font-extrabold px-2.5 py-1 rounded-lg flex items-center gap-1.5 shadow-md border border-indigo-400/30">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span> NOW PLAYING
+                            </span>
+                        ` : `
+                            <span class="bg-slate-950/70 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-lg border border-white/20 shadow-sm">
+                                ${video.duration || 'HD'}
+                            </span>
+                        `}
 
-                        <span class="absolute bottom-2 right-2 bg-black/70 text-white text-[10px] font-bold px-2 py-0.5 rounded-md backdrop-blur">
-                            ${video.duration || 'HQ'}
-                        </span>
+                        <button onclick="event.stopPropagation(); toggleFavorite('${video.id}')" 
+                                class="w-8 h-8 rounded-xl bg-slate-950/60 hover:bg-rose-600 backdrop-blur-md border border-white/20 flex items-center justify-center text-white transition-all shadow-md">
+                            <i class="${isFav ? 'fa-solid text-rose-400' : 'fa-regular text-white'} fa-heart text-xs"></i>
+                        </button>
                     </div>
 
-                    <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
-                        <h4 class="font-bold text-sm text-slate-800 line-clamp-2 leading-snug group-hover:text-indigo-600 transition-colors" onclick="playVideo('${video.id}')">
+                    <!-- Center Hover Play Icon Button -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                        <div class="w-12 h-12 rounded-full bg-indigo-600/90 text-white flex items-center justify-center shadow-2xl opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 backdrop-blur-sm ring-4 ring-indigo-400/30">
+                            <i class="fa-solid fa-play text-base ml-0.5"></i>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Overlay Text & Info Directly Over Video Thumbnail -->
+                    <div class="absolute bottom-0 left-0 right-0 p-3.5 sm:p-4 z-10 flex flex-col justify-end space-y-1.5">
+                        <h4 class="font-bold text-xs sm:text-sm text-white line-clamp-2 leading-snug drop-shadow group-hover:text-indigo-300 transition-colors">
                             ${escapeHtml(video.title)}
                         </h4>
 
-                        <div class="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
-                            <span><i class="fa-solid fa-calendar-days mr-1 text-indigo-500"></i>${formatDate(video.publishedAt)}</span>
-                            
-                            <button onclick="event.stopPropagation(); toggleFavorite('${video.id}')" 
-                                    class="p-1.5 hover:text-pink-600 transition-colors ${isFav ? 'text-pink-600' : 'text-slate-400'}">
-                                <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart text-base"></i>
-                            </button>
+                        <div class="flex items-center justify-between text-[11px] text-slate-300 font-medium pt-1.5 border-t border-white/20">
+                            <span class="flex items-center gap-1 text-indigo-300">
+                                <i class="fa-solid fa-eye text-[10px]"></i>
+                                ${video.views}
+                            </span>
+                            <span class="flex items-center gap-1 text-slate-300">
+                                <i class="fa-solid fa-calendar-days text-[10px]"></i>
+                                ${formatDate(video.publishedAt)}
+                            </span>
                         </div>
                     </div>
                 `;
@@ -874,49 +697,59 @@
             });
         }
 
-        // RENDER SIDEBAR QUEUE
         function renderQueue() {
             const container = document.getElementById('queueContainer');
             const badge = document.getElementById('queueCountBadge');
             container.innerHTML = '';
 
-            badge.innerText = `${videosList.length} Bài`;
+            badge.innerText = `${videosList.length} Videos`;
 
             videosList.forEach((video, index) => {
                 const isPlaying = video.id === currentPlayingVideoId;
 
                 const item = document.createElement('div');
-                item.className = `p-2.5 rounded-xl flex items-center gap-3 cursor-pointer transition-all ${isPlaying ? 'bg-indigo-50 border border-indigo-200' : 'hover:bg-slate-100/80 border border-transparent'}`;
+                item.className = `p-2 rounded-xl flex items-center gap-3 cursor-pointer transition-all ${isPlaying ? 'bg-indigo-50 border border-indigo-200' : 'hover:bg-slate-100/80 border border-transparent'}`;
                 item.onclick = () => playVideo(video.id);
 
                 item.innerHTML = `
-                    <span class="text-xs font-mono font-bold ${isPlaying ? 'text-indigo-600' : 'text-slate-400'} w-4 text-center">
-                        ${index + 1}
-                    </span>
-                    <img src="${video.thumbnail}" class="w-14 h-10 object-cover rounded-lg shrink-0 border border-slate-200">
+                    <div class="w-4 text-center shrink-0">
+                        ${isPlaying ? `
+                            <div class="flex items-end justify-center gap-0.5 h-3">
+                                <span class="w-0.5 bg-indigo-600 wave-bar"></span>
+                                <span class="w-0.5 bg-indigo-600 wave-bar"></span>
+                                <span class="w-0.5 bg-indigo-600 wave-bar"></span>
+                            </div>
+                        ` : `
+                            <span class="text-[11px] font-mono font-bold text-slate-400">${index + 1}</span>
+                        `}
+                    </div>
+                    
+                    <div class="relative w-14 h-9 rounded-lg overflow-hidden shrink-0 border border-slate-200">
+                        <img src="${video.thumbnail}" class="w-full h-full object-cover">
+                    </div>
+                    
                     <div class="flex-1 min-w-0">
-                        <p class="text-xs font-bold text-slate-800 truncate ${isPlaying ? 'text-indigo-700' : ''}">
+                        <p class="text-xs font-semibold truncate ${isPlaying ? 'text-indigo-700 font-bold' : 'text-slate-800'}">
                             ${escapeHtml(video.title)}
                         </p>
-                        <p class="text-[10px] text-slate-400 font-medium mt-0.5">Music LABS Official</p>
+                        <p class="text-[10px] text-slate-500 font-medium">Music LABS</p>
                     </div>
                 `;
                 container.appendChild(item);
             });
         }
 
-        // YOUTUBE PLAYER CONTROLLER
         function playVideo(videoId) {
             currentPlayingVideoId = videoId;
             const currentVideo = videosList.find(v => v.id === videoId) || {
-                title: "Music LABS Track",
-                views: "HQ",
+                title: "Music LABS Official Video",
+                views: "HD",
                 publishedAt: new Date().toISOString()
             };
 
             document.getElementById('currentTrackTitle').innerText = currentVideo.title;
-            document.getElementById('currentTrackViews').innerHTML = `<i class="fa-solid fa-eye text-indigo-500 mr-1"></i> ${currentVideo.views} lượt xem`;
-            document.getElementById('currentTrackDate').innerHTML = `<i class="fa-solid fa-clock text-cyan-500 mr-1"></i> ${formatDate(currentVideo.publishedAt)}`;
+            document.getElementById('currentTrackViews').innerHTML = `<i class="fa-solid fa-eye text-indigo-600 mr-1.5"></i> ${currentVideo.views} views`;
+            document.getElementById('currentTrackDate').innerHTML = `<i class="fa-solid fa-calendar-days text-indigo-600 mr-1.5"></i> ${formatDate(currentVideo.publishedAt)}`;
             
             updateLikeButtonState(videoId);
 
@@ -963,14 +796,13 @@
             playVideo(videosList[nextIndex].id);
         }
 
-        // FAVORITES SYSTEM
         function toggleFavorite(videoId) {
             if (favoriteIds.includes(videoId)) {
                 favoriteIds = favoriteIds.filter(id => id !== videoId);
-                showToast('Đã xóa khỏi danh sách yêu thích');
+                showToast('Removed from Favorites');
             } else {
                 favoriteIds.push(videoId);
-                showToast('Đã thêm vào danh sách yêu thích!');
+                showToast('Added to Favorites!');
             }
             localStorage.setItem('MUSICLABS_FAVS', JSON.stringify(favoriteIds));
             updateFavBadge();
@@ -986,44 +818,16 @@
             const btn = document.getElementById('likeTrackBtn');
             const isFav = favoriteIds.includes(videoId);
             if (btn) {
-                btn.innerHTML = `<i class="${isFav ? 'fa-solid text-pink-600' : 'fa-regular text-slate-600'} fa-heart text-lg"></i>`;
+                btn.innerHTML = `<i class="${isFav ? 'fa-solid text-rose-500' : 'fa-regular text-slate-600'} fa-heart text-base"></i>`;
             }
         }
 
-        // EQUALIZER PRESETS
-        function setEqPreset(preset) {
-            const presets = {
-                crystal: { hp: 45, bass: 3, mid: 2, treble: 1, limiter: -1.5, name: 'Crystal Clear (Chống Rè)' },
-                bass: { hp: 30, bass: 8, mid: 0, treble: -1, limiter: -2, name: 'Deep Bass & Warm' },
-                vocal: { hp: 60, bass: 0, mid: 6, treble: 3, limiter: -1, name: 'Vocal Clarity' },
-                flat: { hp: 20, bass: 0, mid: 0, treble: 0, limiter: 0, name: 'Mặc định (Flat)' }
-            };
-
-            const selected = presets[preset] || presets.crystal;
-
-            document.getElementById('hpCutSlider').value = selected.hp;
-            document.getElementById('bassSlider').value = selected.bass;
-            document.getElementById('midSlider').value = selected.mid;
-            document.getElementById('trebleSlider').value = selected.treble;
-            document.getElementById('limiterSlider').value = selected.limiter;
-
-            document.getElementById('hpCutVal').innerText = selected.hp + 'Hz';
-            document.getElementById('bassVal').innerText = (selected.bass > 0 ? '+' : '') + selected.bass + ' dB';
-            document.getElementById('midVal').innerText = (selected.mid > 0 ? '+' : '') + selected.mid + ' dB';
-            document.getElementById('trebleVal').innerText = (selected.treble > 0 ? '+' : '') + selected.treble + ' dB';
-            document.getElementById('limiterVal').innerText = selected.limiter + ' dB';
-
-            document.getElementById('activeFilterLabel').innerText = `Đang lọc âm thanh: ${selected.name}`;
-            showToast(`Đã bật chế độ lọc âm: ${selected.name}`);
-        }
-
-        // TABS SWITCHING
         function switchTab(tab) {
             activeTab = tab;
             ['tabAll', 'tabLatest', 'tabFavorites'].forEach(t => {
                 const btn = document.getElementById(t);
                 if (btn) {
-                    btn.className = "px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all";
+                    btn.className = "px-4 py-2 bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold text-xs rounded-xl border border-slate-200 transition-all";
                 }
             });
 
@@ -1035,13 +839,12 @@
 
             const activeBtn = document.getElementById(activeBtnMap[tab]);
             if (activeBtn) {
-                activeBtn.className = "px-4 py-2 bg-indigo-600 text-white font-bold text-xs rounded-xl shadow-md transition-all";
+                activeBtn.className = "px-4 py-2 bg-indigo-600 text-white font-semibold text-xs rounded-xl shadow-glow-primary transition-all";
             }
 
             renderVideosGrid();
         }
 
-        // UTILITY FUNCTIONS
         function showLoading(show) {
             const spinner = document.getElementById('loadingSpinner');
             if (spinner) spinner.classList.toggle('hidden', !show);
@@ -1058,10 +861,10 @@
 
         function showToast(message) {
             const toast = document.createElement('div');
-            toast.className = 'fixed bottom-6 right-6 z-50 bg-slate-900 text-white border border-slate-700 px-4 py-3 rounded-2xl shadow-2xl text-xs font-bold flex items-center gap-2 animate-bounce';
-            toast.innerHTML = `<i class="fa-solid fa-circle-check text-cyan-400"></i><span>${escapeHtml(message)}</span>`;
+            toast.className = 'fixed bottom-6 right-6 z-50 bg-slate-900 text-white border border-slate-800 px-4 py-3 rounded-xl shadow-2xl text-xs font-medium flex items-center gap-2.5 transition-all';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-indigo-400"></i><span>${escapeHtml(message)}</span>`;
             document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3200);
+            setTimeout(() => toast.remove(), 3000);
         }
 
         function copyToClipboard(text) {
@@ -1074,9 +877,9 @@
         }
 
         function formatDuration(isoDuration) {
-            if (!isoDuration) return 'HQ';
+            if (!isoDuration) return 'HD';
             const match = isoDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
-            if (!match) return 'HQ';
+            if (!match) return 'HD';
             const hours = match[1] ? match[1].padStart(2, '0') : null;
             const minutes = (match[2] || '0').padStart(2, '0');
             const seconds = (match[3] || '0').padStart(2, '0');
@@ -1092,12 +895,12 @@
         }
 
         function formatDate(isoStr) {
-            if (!isoStr) return 'Mới đây';
+            if (!isoStr) return 'Recently';
             try {
                 const date = new Date(isoStr);
-                return date.toLocaleDateString('vi-VN', { year: 'numeric', month: 'short', day: 'numeric' });
+                return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
             } catch (e) {
-                return 'Mới đây';
+                return 'Recently';
             }
         }
 
